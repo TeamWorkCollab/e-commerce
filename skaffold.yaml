@@ -1,0 +1,23 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+    - ./infra/k8s/*.yaml
+build:
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: e-commerce-319900
+  artifacts:
+    # - image: vunguyen88/auth
+    # - image: elainevu/auth
+    - image: us.gcr.io/e-commerce-319900/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    
