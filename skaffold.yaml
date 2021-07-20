@@ -20,12 +20,13 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    # - image: elainevu/client
     - image: us.gcr.io/e-commerce-319900/client
       context: client
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.js'
+          - src: '**/*.js'
             dest: .
     
