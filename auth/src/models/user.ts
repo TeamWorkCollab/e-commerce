@@ -28,6 +28,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+}, {
+    // Transform the return for id instead of _id and take out password and __v.
+    toJSON: {
+        transform(doc, ret) {
+            ret.id = ret._id;
+            delete ret._id;
+            delete ret.password;
+            delete ret.__v;
+        }
+    }
 })
 
 userSchema.pre('save', async function(done) {
