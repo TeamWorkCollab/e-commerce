@@ -14,17 +14,17 @@ const SignIn = () => {
           email,
           password
         },
-        onSuccess: () => Router.push('/')
+        onSuccess: (data) => Router.push('/')
       });
     
-      const onSubmit = async event => {
+    const onSubmit = async event => {
         event.preventDefault();
     
         await doRequest();
-      };
+    };
   
     return (
-        <form>
+        <form onSubmit={onSubmit}>
             <h1>Sign In</h1>
             <div className="form-group">
                 <label>Email Address</label>

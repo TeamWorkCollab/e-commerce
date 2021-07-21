@@ -1,6 +1,7 @@
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 
-const HomeNav = () => {
+const HomeNav = ({ currentUser }) => {
+
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
         <Container>
@@ -31,6 +32,7 @@ const HomeNav = () => {
                 aria-label="Search"
             />
             <Button variant="outline-success">Search</Button>
+            {currentUser ? currentUser.email : null}
             </Form>
             </Nav>
         </Navbar.Collapse>
