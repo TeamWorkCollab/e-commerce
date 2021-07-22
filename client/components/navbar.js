@@ -1,6 +1,19 @@
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import Link from 'next/link';
 
 const HomeNav = ({ currentUser }) => {
+    const links = [
+        !currentUser && { label: 'Sign In', href: '/auth/signin' },
+        currentUser  &&  { label: 'Sign Out', href: '/auth/signout' }
+    ]
+        .filter(linkConfig => linkConfig)
+        .map(({ label, href }) => {
+            return <li key={href}>
+                <Link href={href}>
+                    <a>{label}</a>
+                </Link>
+            </li>
+        })   
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
@@ -32,7 +45,8 @@ const HomeNav = ({ currentUser }) => {
                 aria-label="Search"
             />
             <Button variant="outline-success">Search</Button>
-            {currentUser ? currentUser.email : null}
+            {/* {currentUser ? currentUser.email : null} */}
+            {links}
             </Form>
             </Nav>
         </Navbar.Collapse>

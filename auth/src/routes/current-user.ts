@@ -1,8 +1,11 @@
 import express from 'express';
 
 
-import { currentUser } from '../middlewares/current-user';
-import { requireAuth } from '../middlewares/require-auth';
+//import { currentUser } from '../../../common/src/middlewares/current-user';
+// import { requireAuth } from '../../../common/src/middlewares/require-auth';
+import { currentUser } from '@vuelaine-ecommerce/common';
+import { requireAuth } from '@vuelaine-ecommerce/common';
+
 
 const router = express.Router();
 
