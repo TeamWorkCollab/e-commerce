@@ -29,4 +29,14 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    # - image: vunguyen88/products
+    # - image: elainevu/products
+    - image: us.gcr.io/e-commerce-319900/products
+      context: products
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
     
