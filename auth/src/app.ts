@@ -8,8 +8,9 @@ import { currentUserRouter } from './routes/current-user';
 import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
-import { errorHandler } from './middlewares/error-handler';
-import { NotFoundError } from './errors/not-found-error';
+// import { errorHandler } from '../../common/src/middlewares/error-handler';
+// import { NotFoundError } from '../../common/src/errors/not-found-error';
+import { errorHandler, NotFoundError } from '@vuelaine-ecommerce/common';
 
 const app = express();
 app.set('trust proxy', true);
