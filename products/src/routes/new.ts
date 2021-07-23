@@ -1,12 +1,13 @@
 import express, { Request, Response}  from 'express';
 import { body } from 'express-validator';
-import { requireAuth, validateRequest } from '@vuelaine-ecommerce/common';
+import { currentUser, requireAuth, validateRequest, NotAuthorizedError } from '@vuelaine-ecommerce/common';
 import { Product } from '../models/product';
 
 const router = express.Router();
 
 router.post(
     '/api/products', 
+    currentUser,
     requireAuth, 
     [
         body('name').not().isEmpty().withMessage('Title is required'),
@@ -14,7 +15,12 @@ router.post(
         body('details').not().isEmpty().withMessage('Details is required')
     ], 
     validateRequest,
+    
     async (req: Request, res: Response) => {
+        if (req.currentUser!.role !== 'admin') {
+            throw new NotAuthorizedError();
+        }
+        
         const { name, price, size, details, reviews, color, type } = req.body;
 
         const product = Product.build({
