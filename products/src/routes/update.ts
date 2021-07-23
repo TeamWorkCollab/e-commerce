@@ -5,7 +5,6 @@ import {
     NotFoundError,
     requireAuth,
     NotAuthorizedError,
-    CustomError,
     currentUser,
 } from '@vuelaine-ecommerce/common';
 import { Product } from '../models/product';
@@ -14,6 +13,7 @@ const router = express.Router();
 
 router.put(
     '/api/products/:id', 
+    currentUser,
     requireAuth, 
     [
         body('name').not().isEmpty().withMessage('Name is required'),
@@ -27,11 +27,11 @@ router.put(
     if (!product) {
         throw new NotFoundError();
     }
-
+   
     // Check if user role is admin to update product
-    // if (req.currentUser!.role !== 'admin') {
-    //     throw new CustomError('Not authorized!')
-    // }
+    if (req.currentUser!.role !== 'admin') {
+        throw new NotAuthorizedError();
+    }
 
     product.set({
         name: req.body.name,
