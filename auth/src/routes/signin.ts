@@ -38,8 +38,9 @@ router.post('/api/users/signin',
         // Generate JwT
         const userJwt = jwt.sign(
             {
-            id: existingUser.id,
-            email: existingUser.email
+                id: existingUser.id,
+                email: existingUser.email,
+                role: existingUser.role,
             }, 
             process.env.JWT_KEY!
         );

@@ -16,26 +16,31 @@ router.post('/api/users/signup', [
         body('password')
             .trim()
             .isLength({ min: 4, max: 20 })
-            .withMessage('Password must be between 4 and 20 characters')
+            .withMessage('Password must be between 4 and 20 characters'),
+        body('role')
+            .trim()
+            .isLength({ min: 4, max: 20 })
+            .withMessage('Role is required')
     ],
     validateRequest,
     async (req: Request, res: Response) => {
      
-        const { email, password } = req.body;
+        const { email, password, role } = req.body;
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
             throw new BadRequestError('Email in use');
         }
         
-        const user = User.build({ email, password });
+        const user = User.build({ email, password, role });
         await user.save();
 
         // Generate JwT
         const userJwt = jwt.sign(
             {
-            id: user.id,
-            email: user.email
+                id: user.id,
+                email: user.email,
+                role: user.role,
             }, 
             process.env.JWT_KEY!
         );
