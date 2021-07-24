@@ -12,7 +12,9 @@ router.post(
     [
         body('name').not().isEmpty().withMessage('Title is required'),
         body('price').isFloat({ gt: 0 }).withMessage('Price must be greater than 0'),
-        body('details').not().isEmpty().withMessage('Details is required')
+        body('details').not().isEmpty().withMessage('Details is required'),
+        body('productUrl').not().isEmpty().withMessage('ProductUrl is required')
+
     ], 
     validateRequest,
     
@@ -20,8 +22,8 @@ router.post(
         if (req.currentUser!.role !== 'admin') {
             throw new NotAuthorizedError();
         }
-        
-        const { name, price, size, details, reviews, color, type } = req.body;
+
+        const { name, price, size, details, reviews, color, type, productUrl } = req.body;
 
         const product = Product.build({
             name,
@@ -32,6 +34,7 @@ router.post(
             reviews,
             color,
             type,
+            productUrl,
         });
         await product.save();
 
