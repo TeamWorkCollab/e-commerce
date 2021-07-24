@@ -40,7 +40,8 @@ router.put(
         size: req.body.size,
         reviews: req.body.reviews,
         color: req.body.color,
-        type: req.body.type
+        type: req.body.type,
+        productUrl: req.body.productUrl,
     });
 
     await product.save();

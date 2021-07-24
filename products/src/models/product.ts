@@ -9,6 +9,7 @@ interface ProductAttrs {
     reviews: string[];
     color: string[];
     type:string;
+    productUrl: string;
 }
 
 interface ProductDocs extends mongoose.Document {
@@ -20,6 +21,7 @@ interface ProductDocs extends mongoose.Document {
     reviews: string[];
     color: string[];
     type:string;
+    productUrl: string;
 }
 
 interface ProductModel extends mongoose.Model<ProductDocs>{
@@ -59,6 +61,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         //required: true
     },
+    productUrl: {
+        type: String,
+        required: true
+    }
 }, {
     toJSON: {
         transform(doc, ret) {
