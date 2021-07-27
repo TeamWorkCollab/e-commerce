@@ -1,4 +1,4 @@
-import { Subjects } from './subjets';
+import { Subjects } from './subjects';
 
 
 export interface ProductCreatedEvent {

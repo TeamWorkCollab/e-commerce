@@ -2,6 +2,8 @@ import express, { Request, Response}  from 'express';
 import { body } from 'express-validator';
 import { currentUser, requireAuth, validateRequest, NotAuthorizedError } from '@vuelaine-ecommerce/common';
 import { Product } from '../models/product';
+import { ProductCreatedPublisher } from '../events/publishers/product-created-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -37,6 +39,12 @@ router.post(
             productUrl,
         });
         await product.save();
+        new ProductCreatedPublisher(natsWrapper.client).publish({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            // userId: product.userId
+        });
 
         res.status(201).send(product);
     }
