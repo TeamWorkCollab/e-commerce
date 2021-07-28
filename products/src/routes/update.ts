@@ -8,6 +8,8 @@ import {
     currentUser,
 } from '@vuelaine-ecommerce/common';
 import { Product } from '../models/product';
+import { ProductUpdatedPublisher } from '../events/publishers/product-updated-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -45,6 +47,18 @@ router.put(
     });
 
     await product.save();
+    await new ProductUpdatedPublisher(natsWrapper.client).publish({
+        id: product.id,
+        userId: req.currentUser!.id,
+        name: product.name,
+        price: product.price,
+        details: product.details,
+        size: product.size,
+        reviews: product.reviews,
+        color: product.color,
+        type: product.type,
+        productUrl: product.productUrl
+    })
 
     res.send(product);
 });
