@@ -1,6 +1,7 @@
 import nats from 'node-nats-streaming';
 import { randomBytes } from 'crypto';
 import { ProductCreatedListener } from './events/product-created-listener';
+import { ProductUpdatedListener } from './events/product-updated-listener';
 
 //console.clear();
 
@@ -42,6 +43,8 @@ stan.on('connect', () => {
     // });
 
     new ProductCreatedListener(stan).listen();
+    // listen to product update channel
+    new ProductUpdatedListener(stan).listen();
 });
 
 process.on('SIGINT', () => stan.close());

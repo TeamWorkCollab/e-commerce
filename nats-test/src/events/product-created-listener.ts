@@ -10,9 +10,9 @@ export class ProductCreatedListener extends Listener<ProductCreatedEvent> {
     onMessage(data: ProductCreatedEvent['data'], msg:Message) {
         console.log('Event data!', data);
 
-        console.log(data.id);
-        console.log(data.name);
-        console.log(data.price);
+        // console.log(data.id);
+        // console.log(data.name);
+        // console.log(data.price);
 
         msg.ack();
     }
