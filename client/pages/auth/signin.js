@@ -50,6 +50,9 @@ const SignIn = () => {
                     />
                 </div>
                 {errors}
+                <div>
+                New user? Register <a href="/auth/signup">here</a>
+                </div>
                 <div className={styles.auth_buttoncontainer}>
                     <div>
                         <button className="btn btn-primary">Sign In</button>
@@ -71,7 +74,7 @@ const SignIn = () => {
                     </div>
                     </div>
                  </div>
-                 
+
                 </div>
             </form>
             </Container>

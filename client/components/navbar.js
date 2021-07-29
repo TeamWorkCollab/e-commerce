@@ -19,7 +19,7 @@ const HomeNav = ({ currentUser }) => {
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
         <Container>
         <Nav className="me-auto">
-                <Navbar.Brand href="#home">woolfolk</Navbar.Brand>
+                <Navbar.Brand href="/">woolfolk</Navbar.Brand>
             </Nav>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

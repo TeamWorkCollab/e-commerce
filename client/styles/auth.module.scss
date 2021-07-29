@@ -16,6 +16,31 @@
     position: absolute;
 }
 
+@mixin fadein-animation($duration) {
+    $name: fadein-#{unique-id()};
+  
+    @keyframes #{$name} {
+      @content;
+    }
+    animation-name: $name;
+    animation-duration: $duration;
+    animation-iteration-count: none;
+  }
+
+.signIn {
+    @include fadein-animation(5s) {
+        0% {opacity: 0; transform:translateY(-25px); }
+        100% {opacity: 1;  transform:translateY(0); }
+    }
+}
+
+.signUp {
+    @include fadein-animation(5s) {
+        00% {opacity: 0; transform:translateY(-25px); }
+        100% {opacity: 1;  transform:translateY(0); }
+    }
+}
+
 .form_centered {
     width: 500px;
     background: rgba(255, 255, 255, 0.8);

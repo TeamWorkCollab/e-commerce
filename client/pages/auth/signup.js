@@ -52,6 +52,9 @@ const SignUp = () => {
                 {errors}
                 {/* {errors ? (<div style={{color: 'red'}}>{errors.map(err => err.message)}</div>)
                         : null } */}
+                <div>
+                Already a user? Login <a href="/auth/signin">here</a>
+                </div>
                 <div className={styles.auth_buttoncontainer}>
                     <button className="btn btn-primary">Sign Up</button>
                 </div>
