@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Router from 'next/router';
 import useRequest from '../../hooks/use-request';
+import styles from '../../styles/auth.module.scss';
 
 //KNOWN ERROR FOR MAPPED ERRORS
 const SignOut = () => {
@@ -16,7 +17,9 @@ const SignOut = () => {
       }, []);
     
       return (
-        <div>Signing you out...</div>
+        <div className={styles.container}>
+          <div>Signing you out...</div>
+        </div>
       );
 };
 
