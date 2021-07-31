@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 interface ProductAttrs {
     name: string;
@@ -22,6 +23,7 @@ interface ProductDocs extends mongoose.Document {
     color: string[];
     type:string;
     productUrl: string;
+    version: number;
 }
 
 interface ProductModel extends mongoose.Model<ProductDocs>{
@@ -73,6 +75,9 @@ const productSchema = new mongoose.Schema({
         }
     }
 });
+
+productSchema.set('versionKey', 'version');
+productSchema.plugin(updateIfCurrentPlugin);
 
 productSchema.statics.build = (attrs: ProductAttrs) => {
     return new Product(attrs);

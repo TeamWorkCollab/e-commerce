@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: auth
-          # image: elainevu/auth   
-          image: us.gcr.io/e-commerce-319900/auth
+          image: elainevu/auth   
+          # image: us.gcr.io/e-commerce-319900/auth
           env: 
             - name: MONGO_URI
               value: 'mongodb://auth-mongo-srv:27017/auth'
