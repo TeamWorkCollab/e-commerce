@@ -57,9 +57,9 @@ router.put(
         reviews: product.reviews,
         color: product.color,
         type: product.type,
-        productUrl: product.productUrl
+        productUrl: product.productUrl,
+        version: product.version,
     })
-
     res.send(product);
 });
 

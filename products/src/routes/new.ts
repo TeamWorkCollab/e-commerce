@@ -50,8 +50,8 @@ router.post(
             type: product.type,
             color: product.color,
             productUrl: product.productUrl,
+            version: product.version,
         });
-
         res.status(201).send(product);
     }
 );

@@ -5,13 +5,13 @@ deploy:
     manifests:
     - ./infra/k8s/*.yaml
 build:
-  # local:
-  #   push: false
-  googleCloudBuild:
-    projectId: e-commerce-319900
+  local:
+    push: false
+  # googleCloudBuild:
+  #   projectId: e-commerce-319900
   artifacts:
-    # - image: elainevu/auth
-    - image: us.gcr.io/e-commerce-319900/auth
+    - image: elainevu/auth
+    # - image: us.gcr.io/e-commerce-319900/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -19,8 +19,8 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    # - image: elainevu/client
-    - image: us.gcr.io/e-commerce-319900/client
+    - image: elainevu/client
+    # - image: us.gcr.io/e-commerce-319900/client
       context: client
       docker:
         dockerfile: Dockerfile
@@ -28,9 +28,18 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
-    # - image: elainevu/products
-    - image: us.gcr.io/e-commerce-319900/products
+    - image: elainevu/products
+    # - image: us.gcr.io/e-commerce-319900/products
       context: products
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: elainevu/orders
+    # - image: us.gcr.io/e-commerce-319900/orders
+      context: orders
       docker:
         dockerfile: Dockerfile
       sync:

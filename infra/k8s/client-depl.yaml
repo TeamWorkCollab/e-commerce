@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: client
-          # image: elainevu/client   
-          image: us.gcr.io/e-commerce-319900/client
+          image: elainevu/client   
+          # image: us.gcr.io/e-commerce-319900/client
 ---
 apiVersion: v1
 kind: Service
