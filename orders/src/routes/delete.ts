@@ -32,7 +32,7 @@ router.delete(
             }
         });
 
-        res.send({});
+        res.status(204).send(order);
 });
 
 export { router as deleteOrderRouter };

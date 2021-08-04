@@ -8,7 +8,8 @@ export class ProductUpdatedListener extends Listener<ProductUpdatedEvent> {
     queueGroupName = queueGrouopName;
 
     async onMessage(data: ProductUpdatedEvent['data'], msg: Message) {
-
+        // const allProducts = await Product.findOne({});
+        // console.log('ALL PRODUCTS BEFORE UPDATE ', allProducts);
         // const product = await Product.findOne({
         //     _id: data.id,
         //     version: data.version - 1

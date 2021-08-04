@@ -4,13 +4,14 @@ import request from 'supertest';
 import { app } from '../app';
 
 import jwt from 'jsonwebtoken';
-// declare global {
-//     namespace NodeJS {
-//         interface Global {
-//             signin():string[];
-//         }
-//     }
-// }
+
+declare global {
+    namespace NodeJS {
+        interface Global {
+            signin():string[];
+        }
+    }
+}
 
 jest.mock('../nats-wrapper');
 
@@ -40,6 +41,8 @@ afterAll(async () => {
     await mongo.stop();
     await mongoose.connection.close();
 })
+
+
 
 // global.signin = () => {
 //     // Build a JWT payload. { id, email }
