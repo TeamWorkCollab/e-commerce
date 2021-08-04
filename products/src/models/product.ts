@@ -24,6 +24,7 @@ interface ProductDocs extends mongoose.Document {
     type:string;
     productUrl: string;
     version: number;
+    orderId?: string;
 }
 
 interface ProductModel extends mongoose.Model<ProductDocs>{
@@ -66,6 +67,10 @@ const productSchema = new mongoose.Schema({
     productUrl: {
         type: String,
         required: true
+    },
+    orderId: {
+        type: String,
+        //require: true
     }
 }, {
     toJSON: {

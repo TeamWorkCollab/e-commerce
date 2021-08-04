@@ -3,12 +3,14 @@ import jwt from 'jsonwebtoken';
 
 import { app } from '../../app';
 import { Product } from '../../models/product';
+import { natsWrapper } from '../../nats-wrapper';
 
 const sessionCookie = () => {
     // Build a JWT payload. { id, email }
     const payload = {
         id: '1fsdlkj324sdf',
-        email: 'test@test.com'
+        email: 'test@test.com',
+        role: 'admin'
     };
 
     // Create the JWT
@@ -50,7 +52,6 @@ it('return  a status other than 401 if the user is signed in', async () => {
         .set('Cookie', sessionCookie())
         .send({});
 
-    console.log(response.status)
     expect(response.status).not.toEqual(401)
 });
 
@@ -101,18 +102,38 @@ it('create a producs with a valid input', async () => {
     .post('/api/products')
     .set('Cookie', sessionCookie())
     .send({
-        name: 'safdsf',
+        name: 'product 1',
         price: 20,
         size: ['S', 'M', 'L', 'XL'],
         details: 'details',
         reviews: ['look great'],
         type: 'asd',
         color: ['red', 'blue'],
+        productUrl: 'https://unsplash.com/photos/FO4mQZi1c0M'
     })
     .expect(201)
 
     products = await Product.find({});
     expect(products.length).toEqual(1);
     expect(products[0].price).toEqual(20);
-    expect(products[0].name).toEqual('safdsf');
+    expect(products[0].name).toEqual('product 1');
 });
+
+// it('publishes an event', async () => {
+//     await request(app)
+//     .post('/api/products')
+//     .set('Cookie', sessionCookie())
+//     .send({
+//         name: 'safdsf',
+//         price: 20,
+//         size: ['S', 'M', 'L', 'XL'],
+//         details: 'details',
+//         reviews: ['look great'],
+//         type: 'asd',
+//         color: ['red', 'blue'],
+//         productUrl: 'https://unsplash.com/photos/FO4mQZi1c0M'
+//     })
+//     .expect(201)
+
+//     expect(natsWrapper.client.publish).toHaveBeenCalled();
+// });

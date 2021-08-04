@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import { natsWrapper } from '../../nats-wrapper';
 
 const sessionCookie = () => {
     // Build a JWT payload. { id, email }
@@ -41,16 +42,22 @@ it('return a 404 if the provided id does not exist', async () => {
 });
 
 it('return a 401 if the user is not authenticated', async () => {
-  // create new mongoDB id
-  const id = new mongoose.Types.ObjectId().toHexString();
+     // create new mongoDB id
+    const id = new mongoose.Types.ObjectId().toHexString();
 
-  await request(app)
-      .put(`/api/tickets/${id}`)
-      .send({
-          name: 'fsdfsd',
-          price: 20
-      })
-      .expect(401);
+    await request(app)
+        .put(`/api/products/${id}`)
+        .send({
+            name: 'fsdfsd',
+            price: 20,
+            size: ["XS", "L", "updated"],
+            details: 'details',
+            reviews: ['look great'],
+            type: 'asd',
+            color: ['red', 'blue'],
+            productUrl: 'https://unsplash.com/photos/FO4mQZi1c0M'
+        })
+        .expect(401);
 });
 
 it('return a 401 if the provided id does not exist', async () => {
@@ -66,6 +73,10 @@ it('return 400 if the user provide an invalid product name or price', async () =
 });
 
 it('updates the product provided valid input', async () => {
+
+});
+
+it('publishes an event', async () => {
 
 });
 

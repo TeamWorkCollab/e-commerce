@@ -8,7 +8,8 @@ const sessionCookie = () => {
     // Build a JWT payload. { id, email }
     const payload = {
         id: new mongoose.Types.ObjectId().toHexString(),
-        email: 'test@test.com'
+        email: 'test@test.com',
+        role: 'admin'
     };
 
     // Create the JWT
@@ -52,6 +53,7 @@ it('returns a ticket if the ticket is found', async () => {
             reviews: ['look great'],
             type: 'asd',
             color: ['red', 'blue'],
+            productUrl: 'https://unsplash.com/photos/FO4mQZi1c0M'
         })
         .expect(201)
     

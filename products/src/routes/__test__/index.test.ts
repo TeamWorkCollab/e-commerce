@@ -7,7 +7,8 @@ const sessionCookie = () => {
     // Build a JWT payload. { id, email }
     const payload = {
         id: new mongoose.Types.ObjectId().toHexString(),
-        email: 'test@test.com'
+        email: 'test@test.com',
+        role: 'admin'
     };
 
     // Create the JWT
@@ -38,6 +39,7 @@ it('can fetch a list of products', async () => {
             reviews: ['look great'],
             type: 'street',
             color: ['red', 'blue'],
+            productUrl: 'https://unsplash.com/photos/FO4mQZi1c0M'
         })
     await request(app)
         .post('/api/products')
@@ -50,6 +52,7 @@ it('can fetch a list of products', async () => {
             reviews: ['look awesome'],
             type: 'office',
             color: ['black', 'yellow'],
+            productUrl: 'https://unsplash.com/photos/FO4mQZi1c0M'
         })
 
     const response = await request(app)
