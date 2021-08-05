@@ -1,27 +1,22 @@
+import { Listener, OrderCancelledEvent, Subjects } from "@vuelaine-ecommerce/common";
 import { Message } from 'node-nats-streaming';
-import { Listener, OrderCreatedEvent, Subjects } from "@vuelaine-ecommerce/common";
 import { queueGrouopName } from "./queue-group-name";
 import { Product } from '../../models/product';
-import { ProductUpdatedPublisher } from '../publishers/product-updated-publisher';
+import { ProductUpdatedPublisher } from "../publishers/product-updated-publisher";
 
-export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
-    subject: Subjects.OrderCreated = Subjects.OrderCreated;
+export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
+    subject: Subjects.OrderCancelled = Subjects.OrderCancelled;
     queueGroupName = queueGrouopName;
 
-    async onMessage(data: OrderCreatedEvent['data'], msg: Message) {
-        // find the product that the order is reserving
+    async onMessage(data: OrderCancelledEvent['data'], msg:Message) {
         const product = await Product.findById(data.product.id);
 
-        // if no product, throw error
         if (!product) {
-            throw new Error('Product not found');
+            throw new Error('Ticket not found');
         }
 
-        // mark the product as being reserved by setting its orderId property
-        product.set({ orderId: data.id });
-
-        // save the product
-        await product.save();
+        product.set({ orderId: undefined });
+        await product.save()
         await new ProductUpdatedPublisher(this.client).publish({
             id: product.id,
             version: product.version,
@@ -34,10 +29,9 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
             type: product.type,
             color: product.color,
             productUrl: product.productUrl,
-            orderId: product.orderId
-        })
+            orderId: product.orderId,
+        });
 
-        // ack the message
         msg.ack();
     }
 }

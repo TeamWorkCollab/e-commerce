@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
+import { Product } from '../../models/product';
 import jwt from 'jsonwebtoken';
 import { natsWrapper } from '../../nats-wrapper';
 
@@ -8,7 +9,8 @@ const sessionCookie = () => {
     // Build a JWT payload. { id, email }
     const payload = {
         id: new mongoose.Types.ObjectId().toHexString(),
-        email: 'test@test.com'
+        email: 'test@test.com',
+        role: 'admin'
     };
 
     // Create the JWT
@@ -77,6 +79,74 @@ it('updates the product provided valid input', async () => {
 });
 
 it('publishes an event', async () => {
+    const cookie = sessionCookie();
 
+    const response = await request(app)
+        .post('/api/products')
+        .set('Cookie', cookie)
+        .send({
+            name: 'product 1',
+            price: 20,
+            size: ["XS", "L"],
+            details: 'details',
+            reviews: ['look great'],
+            type: 'asd',
+            color: ['red', 'blue'],
+            productUrl: 'https://unsplash.com/photos/FO4mQZi1c0M'
+        });
+
+    await request(app)
+        .put(`/api/products/${response.body.id}`)
+        .set('Cookie', cookie)
+        .send({
+            name: 'product 1 updated',
+            price: 90,
+            size: ["XS", "L", "updated"],
+            details: 'details updated',
+            reviews: ['look great', 'fit well'],
+            type: 'updated',
+            color: ['red', 'blue'],
+            productUrl: 'https://unsplash.com/photos/FO4mQZi1c0M'
+        })
+        .expect(200);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
+
+it('rejects updates if the product is reserved', async () => {
+    const cookie = sessionCookie();
+
+    const response = await request(app)
+        .post('/api/products')
+        .set('Cookie', cookie)
+        .send({
+            name: 'product 1',
+            price: 20,
+            size: ["XS", "L"],
+            details: 'details',
+            reviews: ['look great'],
+            type: 'asd',
+            color: ['red', 'blue'],
+            productUrl: 'https://unsplash.com/photos/FO4mQZi1c0M'
+        });
+
+    const product = await Product.findById(response.body.id);
+    product!.set({ orderId: mongoose.Types.ObjectId().toHexString() })
+    await product!.save();
+
+    await request(app)
+        .put(`/api/products/${response.body.id}`)
+        .set('Cookie', cookie)
+        .send({
+            name: 'product 1 updated',
+            price: 90,
+            size: ["XS", "L", "updated"],
+            details: 'details updated',
+            reviews: ['look great', 'fit well'],
+            type: 'updated',
+            color: ['red', 'blue'],
+            productUrl: 'https://unsplash.com/photos/FO4mQZi1c0M'
+        })
+        .expect(400);
+})
 
