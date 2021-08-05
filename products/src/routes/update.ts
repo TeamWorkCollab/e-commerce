@@ -6,6 +6,7 @@ import {
     requireAuth,
     NotAuthorizedError,
     currentUser,
+    BadRequestError,
 } from '@vuelaine-ecommerce/common';
 import { Product } from '../models/product';
 import { ProductUpdatedPublisher } from '../events/publishers/product-updated-publisher';
@@ -30,6 +31,10 @@ router.put(
         throw new NotFoundError();
     }
    
+    if (product.orderId) {
+        throw new BadRequestError('Product is reserved');
+    }
+
     // Check if user role is admin to update product
     if (req.currentUser!.role !== 'admin') {
         throw new NotAuthorizedError();

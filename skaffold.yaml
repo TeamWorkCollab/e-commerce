@@ -3,7 +3,7 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-    - ./infra/k8s/*.yaml
+      - ./infra/k8s/*.yaml
 build:
   local:
     push: false
@@ -11,7 +11,7 @@ build:
   #   projectId: e-commerce-319900
   artifacts:
     - image: elainevu/auth
-    # - image: us.gcr.io/e-commerce-319900/auth
+      # - image: us.gcr.io/e-commerce-319900/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -20,7 +20,7 @@ build:
           - src: 'src/**/*.ts'
             dest: .
     - image: elainevu/client
-    # - image: us.gcr.io/e-commerce-319900/client
+      # - image: us.gcr.io/e-commerce-319900/client
       context: client
       docker:
         dockerfile: Dockerfile
@@ -29,7 +29,7 @@ build:
           - src: '**/*.js'
             dest: .
     - image: elainevu/products
-    # - image: us.gcr.io/e-commerce-319900/products
+      # - image: us.gcr.io/e-commerce-319900/products
       context: products
       docker:
         dockerfile: Dockerfile
@@ -38,7 +38,7 @@ build:
           - src: 'src/**/*.ts'
             dest: .
     - image: elainevu/orders
-    # - image: us.gcr.io/e-commerce-319900/orders
+      # - image: us.gcr.io/e-commerce-319900/orders
       context: orders
       docker:
         dockerfile: Dockerfile
@@ -46,4 +46,12 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    
+    - image: elainevu/expiration
+      # - image: us.gcr.io/e-commerce-319900/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
