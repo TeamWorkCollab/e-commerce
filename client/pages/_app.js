@@ -31,7 +31,7 @@ AppComponent.getInitialProps = async (appContext) => {
             ...res.data
         }
     } catch(err) {
-        console.log(err)
+        //console.log(err)
         return {}
     }
 };
