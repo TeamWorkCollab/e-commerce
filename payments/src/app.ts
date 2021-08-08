@@ -7,6 +7,7 @@ import cookieSession from 'cookie-session';
 // import { errorHandler } from '../../common/src/middlewares/error-handler';
 // import { NotFoundError } from '../../common/src/errors/not-found-error';
 import { errorHandler, NotFoundError, currentUser } from '@vuelaine-ecommerce/common';
+import { createChargeRouter } from './routes/news';
 
 const app = express();
 app.set('trust proxy', true);
@@ -19,6 +20,8 @@ app.use(
     })
 );
 app.use(currentUser);
+
+app.use(createChargeRouter);
 
 app.all('*', async (req, res) => {
     throw new NotFoundError();
