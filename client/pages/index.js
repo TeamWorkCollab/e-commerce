@@ -17,7 +17,7 @@ const Landing =  ({ currentUser, products }) => {
     })) : null;
 
     return (
-        <div className={styles.container}>
+        <div className={styles.landing}>
             {/* <HomeNav /> */}
             <h1>Landing Page</h1>
             <div className={styles.test}>TEST ME IN SASS</div>
@@ -38,6 +38,7 @@ const Landing =  ({ currentUser, products }) => {
             : null
             }
         </div>
+        
     );
 };
 
