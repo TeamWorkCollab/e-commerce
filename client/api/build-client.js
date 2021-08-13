@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export default ({ req }) => {
+const BuildClient = ({ req }) => {
     if(typeof window === 'undefined') {
         // api call from server
-        //console.log('CALL FROM SERVER');
+        console.log('CALL FROM SERVER');
 
         return axios.create({
             baseURL: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
@@ -11,10 +11,12 @@ export default ({ req }) => {
         });
     } else {
         // api call from browser
-        //console.log('CALL FROM BROWSER');
+        console.log('CALL FROM BROWSER');
 
         return axios.create({
             baseURL: '/',
         });
     }
 };
+
+export default BuildClient;
