@@ -1,5 +1,11 @@
+import styles from '../styles/locations.module.scss';
+
 const Locations = () => {
-    return <h1>Locations page</h1>
+    return (
+        <div className={styles.container}>
+            <h1>LOCATION PAGE</h1>
+        </div>
+    )
 };
 
 export default Locations;
