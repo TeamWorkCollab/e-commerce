@@ -6,7 +6,8 @@ import useRequest from '../../hooks/use-request';
 import styles from '../../styles/auth.module.scss';
 import {FaFacebook, FaGoogle} from 'react-icons/fa';
 
-const SignIn = () => {
+const SignIn = ({ currentUser }) => {
+    console.log('currentuser in signin ', currentUser)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 

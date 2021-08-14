@@ -42,13 +42,13 @@ const Landing =  ({ currentUser, products }) => {
     );
 };
 
-Landing.getInitialProps = async (context, client, currentUser) => {
-    //console.log('CLIENT IN INEDEX ', client)
-    console.log('GET INITIAL CALL FROM INDEX ')
-    const { data } = await client.get('/api/products');
-    console.log('data ', data)
-    return { products: data };
-    // return {};
-}
+// Landing.getInitialProps = async (context, client, currentUser) => {
+//     //console.log('CLIENT IN INEDEX ', client)
+//     console.log('GET INITIAL CALL FROM INDEX ')
+//     const { data } = await client.get('/api/products');
+//     console.log('data ', data)
+//     return { products: data };
+//     // return {};
+// }
 
 export default Landing;

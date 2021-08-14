@@ -1,0 +1,39 @@
+@import 'layout';
+
+.contain {
+    display: flex;
+}
+
+.sidebar {
+    flex: 0 0 12%;
+    background-color: yellow;
+}
+
+.side_nav {
+
+}
+
+.side_nav_menu_item {
+
+}
+
+.side_nav_link {
+
+}
+
+.side_nav_sub_menu {
+
+}
+
+.side_nav_sub_menu_item {
+
+}
+
+.product_view {
+    flex: 1;
+    background-color: blue;
+}
+
+footer {
+    background-color: blueviolet;
+}
