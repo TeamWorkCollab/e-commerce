@@ -1,6 +1,8 @@
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import Link from 'next/link';
-import { BsBag, BsPerson, BsBoxArrowInRight } from "react-icons/bs";
+import Router from 'next/router';
+
+import { BsBag, BsPerson, BsBoxArrowInRight, BsGrid1X2 } from "react-icons/bs";
 // import { BsPerson } from "react-icons/bs";
 import style from '../styles/navbar.module.scss';
 
@@ -33,7 +35,8 @@ const HomeNav = ({ currentUser }) => {
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                     </NavDropdown> */}
-                        <Nav.Link href="/">Products</Nav.Link>
+                        <Nav.Link href="/products">Products</Nav.Link>
+                        {/* <Nav.Link onClick={() => Router.push('/products')}>Products</Nav.Link> */}
                         <Nav.Link href="/locations">Locations</Nav.Link>
                         <Nav.Link href="/info">Info</Nav.Link>
                         <Nav.Link href="/story">Story</Nav.Link>
@@ -54,9 +57,14 @@ const HomeNav = ({ currentUser }) => {
                             {/* {currentUser ? currentUser.email : null} */}
                             <Nav.Link href="/auth/signin"><BsBag className={style.nav_icon}/></Nav.Link>
                             {currentUser 
+                                ? <Nav.Link href="/products/new"><BsGrid1X2 className={style.nav_icon}/></Nav.Link> 
+                                : null 
+                            }
+                            {currentUser 
                                 ? <Nav.Link href="/auth/signout"><BsBoxArrowInRight className={style.nav_icon}/></Nav.Link> 
                                 : <Nav.Link href="/auth/signin"><BsPerson className={style.nav_icon}/></Nav.Link> 
                             }
+                            
                             {/* {links} */}
                         </Form>
                     </Nav>
