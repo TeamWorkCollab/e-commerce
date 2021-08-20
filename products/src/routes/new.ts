@@ -15,7 +15,8 @@ router.post(
         body('name').not().isEmpty().withMessage('Title is required'),
         body('price').isFloat({ gt: 0 }).withMessage('Price must be greater than 0'),
         body('details').not().isEmpty().withMessage('Details is required'),
-        body('productUrl').not().isEmpty().withMessage('ProductUrl is required')
+        body('productUrl').not().isEmpty().withMessage('ProductUrl is required'),
+        body('category').not().isEmpty().withMessage('Category is required'),
 
     ], 
     validateRequest,
@@ -25,7 +26,7 @@ router.post(
             throw new NotAuthorizedError();
         }
 
-        const { name, price, size, details, reviews, color, type, productUrl } = req.body;
+        const { name, price, size, details, reviews, color, type, productUrl, category } = req.body;
 
         const product = Product.build({
             name,
@@ -37,6 +38,7 @@ router.post(
             color,
             type,
             productUrl,
+            category,
         });
         await product.save();
         await new ProductCreatedPublisher(natsWrapper.client).publish({
@@ -51,6 +53,7 @@ router.post(
             color: product.color,
             productUrl: product.productUrl,
             version: product.version,
+            category: product.category
         });
         res.status(201).send(product);
     }

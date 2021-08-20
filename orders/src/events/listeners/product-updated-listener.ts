@@ -21,8 +21,8 @@ export class ProductUpdatedListener extends Listener<ProductUpdatedEvent> {
         }
 
         
-        const { name, price, userId, details, size, reviews, color, type, productUrl } = data;
-        product.set({ name, price, userId, details, size, reviews, color, type, productUrl });
+        const { name, price, userId, details, size, reviews, color, type, productUrl, category } = data;
+        product.set({ name, price, userId, details, size, reviews, color, type, productUrl, category });
         await product.save();
 
         msg.ack();

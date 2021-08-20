@@ -59,10 +59,10 @@ const Products = ({ currentUser, products }) => {
                             <a href='/products/kids' className={styles.side_nav_menu_item_link}>Kids</a>
                             <ul className={styles.side_nav_sub_menu}>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Boys</a>
+                                    <a href='/products/kids/boys' className={styles.side_nav_sub_menu_item_link}>Boys</a>
                                 </li>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Girls</a>
+                                    <a href='/products/kids/girls' className={styles.side_nav_sub_menu_item_link}>Girls</a>
                                 </li>
                             </ul>
                         </li>
@@ -79,9 +79,6 @@ const Products = ({ currentUser, products }) => {
                     {/* {renderProducts()} */}
                 </main>
             </div>
-            <footer className={styles.footer}>
-                FOOTER
-            </footer>
 
         </div>
     )

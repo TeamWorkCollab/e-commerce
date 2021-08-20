@@ -27,6 +27,7 @@ export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
             details: product.details,
             reviews: product.reviews,
             type: product.type,
+            category: product.category,
             color: product.color,
             productUrl: product.productUrl,
             orderId: product.orderId,

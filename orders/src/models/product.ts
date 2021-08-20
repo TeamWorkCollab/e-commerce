@@ -14,6 +14,7 @@ interface ProductAttrs {
     color: string[];
     type: string;
     productUrl: string;
+    category: string[];
 }
 
 export interface ProductDoc extends mongoose.Document {
@@ -28,6 +29,7 @@ export interface ProductDoc extends mongoose.Document {
     type: string;
     productUrl: string;
     version: number;
+    category: string[];
     isReserved(): Promise<boolean>;
 }
 
@@ -73,6 +75,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         //required: true
     },
+    category: {
+        type: [String],
+        required: true
+    },
     productUrl: {
         type: String,
         required: true
@@ -107,6 +113,7 @@ productSchema.statics.build = (attrs: ProductAttrs) => {
         color: attrs.color,
         type: attrs.type,
         productUrl: attrs.productUrl,
+        category: attrs.category,
     });
 };
 
