@@ -1,4 +1,5 @@
 import styles from '../styles/products.module.scss';
+import Product from '../components/product';
 
 const Products = ({ currentUser, products }) => {
     console.log('products list in products page ', products)
@@ -10,7 +11,7 @@ const Products = ({ currentUser, products }) => {
                 <nav className={styles.sidebar}>
                     <ul className={styles.side_nav}>
                         <li className={styles.side_nav_menu_item}>
-                            <a href='#' className={styles.side_nav_link}>Shop All</a>
+                            <a href='#' className={styles.side_nav_menu_item_link}>Shop All</a>
                             {/* <ul className={styles.side_nav_sub_menu}>
                                 <li className={styles.side_nav_sub_menu_item}>
                                     <a href='#' className={styles.side_nav_link}>Polo</a>
@@ -21,35 +22,35 @@ const Products = ({ currentUser, products }) => {
                             </ul> */}
                         </li>
                         <li className={styles.side_nav_menu_item}>
-                            <a href='#' className={styles.side_nav_link}>Men</a>
+                            <a href='#' className={styles.side_nav_menu_item_link}>Men</a>
                             <ul className={styles.side_nav_sub_menu}>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_link}>Polo</a>
+                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Polo</a>
                                 </li>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_link}>Shirt</a>
+                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Shirt</a>
                                 </li>
                             </ul>
                         </li>
                         <li className={styles.side_nav_item}>
-                            <a href='#' className={styles.side_nav_link}>Women</a>
+                            <a href='#' className={styles.side_nav_menu_item_link}>Women</a>
                             <ul className={styles.side_nav_sub_menu}>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_link}>Polo</a>
+                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Polo</a>
                                 </li>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_link}>Shirt</a>
+                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Shirt</a>
                                 </li>
                             </ul>
                         </li>
                         <li className={styles.side_nav_item}>
-                            <a href='#' className={styles.side_nav_link}>Kids</a>
+                            <a href='#' className={styles.side_nav_menu_item_link}>Kids</a>
                             <ul className={styles.side_nav_sub_menu}>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_link}>Boys</a>
+                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Boys</a>
                                 </li>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_link}>Girls</a>
+                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Girls</a>
                                 </li>
                             </ul>
                         </li>
@@ -57,10 +58,15 @@ const Products = ({ currentUser, products }) => {
                 </nav>
 
                 <main className={styles.product_view}>
-                    PRODUCT VIEW
+                    {products.length > 0 
+                        ? products.map(product => (
+                            <Product productDetails={product} key={product.id}/>
+                        ))
+                        : null
+                    }
                 </main>
             </div>
-            <footer>
+            <footer className={styles.footer}>
                 FOOTER
             </footer>
 
@@ -71,10 +77,14 @@ const Products = ({ currentUser, products }) => {
 Products.getInitialProps = async (context, client, currentUser) => {
     console.log('CLIENT IN IN PRODUCTDEX ', client)
     console.log('GET INITIAL CALL FROM PRODUCTS PAGE ')
-    const { data } = await client.get('/api/products');
-    console.log('data ', data)
-    return { products: data };
-    // return {};
+    try {
+        const { data } = await client.get('/api/products');
+        console.log('data ', data);
+        return { products: data };
+    } catch (err) {
+        console.log(err);
+        return {};
+    }
 }
 
 export default Products;

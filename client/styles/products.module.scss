@@ -6,19 +6,37 @@
 
 .sidebar {
     flex: 0 0 12%;
-    background-color: yellow;
+    //background-color: yellow;
 }
 
-.side_nav {
-
+ul.side_nav {
+    list-style-type: none;
 }
 
 .side_nav_menu_item {
 
 }
 
-.side_nav_link {
+.side_nav_menu_item_link {
+    font-family: 'CalibreRegular', Helvetica, Arial, Sans-Serif;
+    color: #383333;
+    font-size: 0.65em;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+}
 
+.side_nav_sub_menu_item_link {
+    font-family: 'CalibreRegular', Helvetica, Arial, Sans-Serif;
+    color: #938e8a;
+    font-size: 0.65em;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+}
+
+ul.side_nav_sub_menu {
+    list-style-type: none;
 }
 
 .side_nav_sub_menu {
@@ -31,9 +49,11 @@
 
 .product_view {
     flex: 1;
-    background-color: blue;
+    //background-color: blue;
+    display: flex;
+    margin-left: 2rem;
 }
 
-footer {
+.footer {
     background-color: blueviolet;
 }
