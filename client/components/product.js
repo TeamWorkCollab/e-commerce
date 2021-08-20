@@ -9,9 +9,9 @@ const Product = ({productDetails}) => {
     }
 
     return (
-        <div>
+        <div className={styles.product}>
             <Link href="/products/[productId]" as={`/products/${productDetails.id}`}>
-                <img className={styles.img} src={productDetails.productUrl} width='95%' height='85%' onClick={onClick}/>
+                <img className={styles.img} src={productDetails.productUrl} onClick={onClick}/>
             </Link>
             {/* <Link className={styles.img_name} href='/products/[productId' as={`/products/${productDetails.id}`}><a>{productDetails.name}</a> </Link> */}
             <Link href="/products/[productId]" as={`/products/${productDetails.id}`}>

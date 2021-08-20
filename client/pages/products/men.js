@@ -1,36 +1,89 @@
-import styles from '../../styles/product_show.module.scss';
+import styles from '../../styles//products.module.scss';
+import Product from '../../components/product';
 
 const MenProducts = ({product}) => {
 
     return (
-        <div className={styles.wrapper}>MEN proDUCT
-            {/* <div className={styles.left_container}>
-                <img className={styles.product_img} src={product.productUrl}/> 
+        <div className={styles.wrapper}>
+            <div className={styles.contain}>
+                <nav className={styles.sidebar}>
+                    <ul className={styles.side_nav}>
+                        <li className={styles.side_nav_menu_item}>
+                            <a href='/products' className={styles.side_nav_menu_item_link}>Shop All</a>
+                            {/* <ul className={styles.side_nav_sub_menu}>
+                                <li className={styles.side_nav_sub_menu_item}>
+                                    <a href='#' className={styles.side_nav_link}>Polo</a>
+                                </li>
+                                <li className={styles.side_nav_sub_menu_item}>
+                                    <a href='#' className={styles.side_nav_link}>Shirt</a>
+                                </li>
+                            </ul> */}
+                        </li>
+                        <li className={styles.side_nav_menu_item}>
+                            <a href='/products/men' className={styles.side_nav_menu_item_link}>Men</a>
+                            <ul className={styles.side_nav_sub_menu}>
+                                <li className={styles.side_nav_sub_menu_item}>
+                                    <a href='/products/men/top' className={styles.side_nav_sub_menu_item_link}>Top</a>
+                                </li>
+                                <li className={styles.side_nav_sub_menu_item}>
+                                    <a href='/products/men/bottom' className={styles.side_nav_sub_menu_item_link}>Bottom</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li className={styles.side_nav_item}>
+                            <a href='/products/women' className={styles.side_nav_menu_item_link}>Women</a>
+                            <ul className={styles.side_nav_sub_menu}>
+                                <li className={styles.side_nav_sub_menu_item}>
+                                    <a href='/products/women/top' className={styles.side_nav_sub_menu_item_link}>Top</a>
+                                </li>
+                                <li className={styles.side_nav_sub_menu_item}>
+                                    <a href='/products/women/bottom' className={styles.side_nav_sub_menu_item_link}>Bottom</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li className={styles.side_nav_item}>
+                            <a href='/products/kids' className={styles.side_nav_menu_item_link}>Kids</a>
+                            <ul className={styles.side_nav_sub_menu}>
+                                <li className={styles.side_nav_sub_menu_item}>
+                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Boys</a>
+                                </li>
+                                <li className={styles.side_nav_sub_menu_item}>
+                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Girls</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+
+                <main className={styles.product_view}>
+                    {/* {products.length > 0 
+                        ? products.map(product => (
+                            <Product productDetails={product} key={product.id}/>
+                        ))
+                        : null
+                    } */}
+                    {/* {renderProducts()} */}
+                </main>
             </div>
-            <div className={styles.right_container}>
-                <div className={styles.product_info}>
-                    <h1 className={styles.product_name}>{product.name}</h1>
-                    <div className={styles.product_details}>{product.type}</div>
-                    <p className={styles.product_price}>$ {product.price}</p>
-                    <p className={styles.product_details}>{product.details}</p>
-                    <Button />
-                </div>
-            </div> */}
+            <footer className={styles.footer}>
+                FOOTER
+            </footer>
+
         </div>
     )
 }
 
-// MenProducts.getInitialProps = async (context, client) => {
-//     const {productId} = context.query
-//     console.log('GET INITIAL CALL FROM PRODUCTS PAGE ')
-//     try {
-//         const { data } = await client.get(`/api/products/${productId}`);
-//         console.log('product show data ', data);
-//         return { product: data };
-//     } catch (err) {
-//         console.log(err);
-//         return {};
-//     }
-// }
+MenProducts.getInitialProps = async (context, client) => {
+    console.log('CLIENT IN IN PRODUCTDEX ', client)
+    console.log('GET INITIAL CALL FROM PRODUCTS PAGE ')
+    try {
+        const { data } = await client.get('/api/products');
+        console.log('data in men products', data);
+        return { products: data };
+    } catch (err) {
+        console.log(err);
+        return {};
+    }
+}
 
-export default ProductShow;
+export default MenProducts;

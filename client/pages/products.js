@@ -5,13 +5,25 @@ const Products = ({ currentUser, products }) => {
     console.log('products list in products page ', products)
     console.log('current user in products page ', currentUser)
 
+    // const renderProducts = (products) => {
+    //     console.log('PRODUCT IN FUC ')
+    //     if (products.length > 0) {
+    //         console.log('RENDER')
+    //         return (
+    //             products.map(product => (
+    //                 <Product productDetails={product} key={product.id}/>
+    //             ))
+    //         )
+    //     }
+    // }
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.contain}>
                 <nav className={styles.sidebar}>
                     <ul className={styles.side_nav}>
                         <li className={styles.side_nav_menu_item}>
-                            <a href='#' className={styles.side_nav_menu_item_link}>Shop All</a>
+                            <a href='/products' className={styles.side_nav_menu_item_link}>Shop All</a>
                             {/* <ul className={styles.side_nav_sub_menu}>
                                 <li className={styles.side_nav_sub_menu_item}>
                                     <a href='#' className={styles.side_nav_link}>Polo</a>
@@ -22,29 +34,29 @@ const Products = ({ currentUser, products }) => {
                             </ul> */}
                         </li>
                         <li className={styles.side_nav_menu_item}>
-                            <a href='#' className={styles.side_nav_menu_item_link}>Men</a>
+                            <a href='/products/men' className={styles.side_nav_menu_item_link}>Men</a>
                             <ul className={styles.side_nav_sub_menu}>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Polo</a>
+                                    <a href='/products/men/top' className={styles.side_nav_sub_menu_item_link}>Top</a>
                                 </li>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Shirt</a>
+                                    <a href='/products/men/bottom' className={styles.side_nav_sub_menu_item_link}>Bottom</a>
                                 </li>
                             </ul>
                         </li>
                         <li className={styles.side_nav_item}>
-                            <a href='#' className={styles.side_nav_menu_item_link}>Women</a>
+                            <a href='/products/women' className={styles.side_nav_menu_item_link}>Women</a>
                             <ul className={styles.side_nav_sub_menu}>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Polo</a>
+                                    <a href='/products/women/top' className={styles.side_nav_sub_menu_item_link}>Top</a>
                                 </li>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Shirt</a>
+                                    <a href='/products/women/bottom' className={styles.side_nav_sub_menu_item_link}>Bottom</a>
                                 </li>
                             </ul>
                         </li>
                         <li className={styles.side_nav_item}>
-                            <a href='#' className={styles.side_nav_menu_item_link}>Kids</a>
+                            <a href='/products/kids' className={styles.side_nav_menu_item_link}>Kids</a>
                             <ul className={styles.side_nav_sub_menu}>
                                 <li className={styles.side_nav_sub_menu_item}>
                                     <a href='#' className={styles.side_nav_sub_menu_item_link}>Boys</a>
@@ -64,6 +76,7 @@ const Products = ({ currentUser, products }) => {
                         ))
                         : null
                     }
+                    {/* {renderProducts()} */}
                 </main>
             </div>
             <footer className={styles.footer}>

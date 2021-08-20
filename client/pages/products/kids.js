@@ -1,6 +1,6 @@
 import styles from '../../styles/product_show.module.scss';
 
-const WomenProducts = ({product}) => {
+const KidsProducts = ({product}) => {
 
     return (
         <div className={styles.wrapper}>MEN proDUCT
@@ -20,4 +20,4 @@ const WomenProducts = ({product}) => {
     )
 }
 
-export default WomenProducts;
+export default KidsProducts;
