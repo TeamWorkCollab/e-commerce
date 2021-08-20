@@ -1,7 +1,7 @@
 import styles from '../../styles//products.module.scss';
 import Product from '../../components/product';
 
-const MenProducts = ({product}) => {
+const MenProducts = ({products}) => {
 
     return (
         <div className={styles.wrapper}>
@@ -45,10 +45,10 @@ const MenProducts = ({product}) => {
                             <a href='/products/kids' className={styles.side_nav_menu_item_link}>Kids</a>
                             <ul className={styles.side_nav_sub_menu}>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Boys</a>
+                                    <a href='/products/kids/boys' className={styles.side_nav_sub_menu_item_link}>Boys</a>
                                 </li>
                                 <li className={styles.side_nav_sub_menu_item}>
-                                    <a href='#' className={styles.side_nav_sub_menu_item_link}>Girls</a>
+                                    <a href='/products/kids/girls' className={styles.side_nav_sub_menu_item_link}>Girls</a>
                                 </li>
                             </ul>
                         </li>
@@ -56,19 +56,15 @@ const MenProducts = ({product}) => {
                 </nav>
 
                 <main className={styles.product_view}>
-                    {/* {products.length > 0 
+                    {products.length > 0 
                         ? products.map(product => (
                             <Product productDetails={product} key={product.id}/>
                         ))
                         : null
-                    } */}
+                    }
                     {/* {renderProducts()} */}
                 </main>
             </div>
-            <footer className={styles.footer}>
-                FOOTER
-            </footer>
-
         </div>
     )
 }
@@ -78,8 +74,8 @@ MenProducts.getInitialProps = async (context, client) => {
     console.log('GET INITIAL CALL FROM PRODUCTS PAGE ')
     try {
         const { data } = await client.get('/api/products');
-        console.log('data in men products', data);
-        return { products: data };
+        const menProducts = data.filter(product => product.category.includes('men'))
+        return { products: menProducts };
     } catch (err) {
         console.log(err);
         return {};

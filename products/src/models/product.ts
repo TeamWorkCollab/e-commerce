@@ -11,6 +11,7 @@ interface ProductAttrs {
     color: string[];
     type:string;
     productUrl: string;
+    category: string[];
 }
 
 interface ProductDocs extends mongoose.Document {
@@ -24,6 +25,7 @@ interface ProductDocs extends mongoose.Document {
     type:string;
     productUrl: string;
     version: number;
+    category: string[]
     orderId?: string;
 }
 
@@ -63,6 +65,10 @@ const productSchema = new mongoose.Schema({
     type: {
         type: String,
         //required: true
+    },
+    category: {
+        type: [String],
+        required: true
     },
     productUrl: {
         type: String,

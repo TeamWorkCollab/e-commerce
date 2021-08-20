@@ -1,7 +1,7 @@
-import styles from '../../styles//products.module.scss';
-import Product from '../../components/product';
+import styles from '../../../styles//products.module.scss';
+import Product from '../../../components/product';
 
-const KidsProducts = ({products}) => {
+const WomenBottomProducts = ({products}) => {
 
     return (
         <div className={styles.wrapper}>
@@ -69,12 +69,12 @@ const KidsProducts = ({products}) => {
     )
 }
 
-KidsProducts.getInitialProps = async (context, client) => {
+WomenBottomProducts.getInitialProps = async (context, client) => {
     console.log('CLIENT IN IN PRODUCTDEX ', client)
     console.log('GET INITIAL CALL FROM PRODUCTS PAGE ')
     try {
         const { data } = await client.get('/api/products');
-        const menProducts = data.filter(product => product.category.includes('kids'))
+        const menProducts = data.filter(product => product.category.includes('women-bottom'))
         return { products: menProducts };
     } catch (err) {
         console.log(err);
@@ -82,4 +82,4 @@ KidsProducts.getInitialProps = async (context, client) => {
     }
 }
 
-export default KidsProducts;
+export default WomenBottomProducts;

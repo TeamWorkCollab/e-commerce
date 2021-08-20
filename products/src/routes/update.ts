@@ -21,7 +21,8 @@ router.put(
     [
         body('name').not().isEmpty().withMessage('Name is required'),
         body('price').isFloat({ gt: 0 }).withMessage('Price must be provided and must be greater than 0'),
-        body('details').not().isEmpty().withMessage('Details is required')
+        body('details').not().isEmpty().withMessage('Details is required'),
+        body('category').not().isEmpty().withMessage('Category is required'),
     ],
     validateRequest, 
     async (req: Request, res: Response) => {
@@ -48,6 +49,7 @@ router.put(
         reviews: req.body.reviews,
         color: req.body.color,
         type: req.body.type,
+        category: req.body.category,
         productUrl: req.body.productUrl,
     });
 
@@ -62,6 +64,7 @@ router.put(
         reviews: product.reviews,
         color: product.color,
         type: product.type,
+        category: product.category,
         productUrl: product.productUrl,
         version: product.version,
     })

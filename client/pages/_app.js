@@ -2,6 +2,7 @@ import Head from "next/head";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import buildClient from "../api/build-client";
 import NavBar from '../components/navbar';
+import Footer from '../components/footer';
 import Landing from ".";
 
 const AppComponent = ({ Component, pageProps, currentUser }) => {
@@ -13,6 +14,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
             </Head>
             <NavBar currentUser={currentUser} />
             <Component {...pageProps} currentUser={currentUser}/>
+            <Footer />
         </div>
     );
 }
