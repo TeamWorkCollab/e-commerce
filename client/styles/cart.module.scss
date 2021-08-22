@@ -1,0 +1,50 @@
+@import 'layout';
+
+.container {
+  height: 100vh;
+  display: flex;
+  margin: 0% 10%;
+  justify-content: center;
+}
+
+.payment {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 2%;
+  height: 400px;
+  //background-color: red;
+}
+
+.bag {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  //height: 400px;
+  margin: 2% 5%;
+  //background-color: yellow;
+}
+
+.input {
+  //min-width: 100%;
+  margin: 1rem 0;
+  padding: 1rem 1.5rem;
+  //padding: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 0.4285714286em;
+}
+
+.form {
+  .label {
+    margin-top: 1.5rem;
+    width: 100%;
+  }
+}
+
+.inline_form {
+  display: flex;
+  justify-content: space-between;
+}
