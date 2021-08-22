@@ -2,7 +2,8 @@ import styles from '../../styles/product_show.module.scss';
 import Button from '../../components/button';
 
 const ProductShow = ({product}) => {
-
+    // let cart = sessionStorage.getItem('cart');
+    // console.log('cart in session ', cart)
     return (
         <div className={styles.wrapper}>
             <div className={styles.left_container}>
@@ -14,7 +15,7 @@ const ProductShow = ({product}) => {
                     <div className={styles.product_details}>{product.type}</div>
                     <p className={styles.product_price}>$ {product.price}</p>
                     <p className={styles.product_details}>{product.details}</p>
-                    <Button />
+                    <Button product={product}/>
                 </div>
             </div>
         </div>
