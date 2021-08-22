@@ -60,10 +60,10 @@ const HomeNav = ({ currentUser }) => {
                             />
                             {/* <Button variant="outline-success">Search</Button> */}
                             {/* {currentUser ? currentUser.email : null} */}
-                            <Nav.Link href="/auth/signin"><BsBag className={style.nav_icon}/></Nav.Link>
-                            <div style={{position: 'absolute', right: '18.5%'}}>
-                                {cart ? cart.length : null}
-                            </div>
+                            <Nav.Link href="/cart" className={style.notification}>
+                                <BsBag className={style.nav_icon}/>
+                                {cart ? <span className={style.cart_notification}>{cart.length}</span> : null}
+                            </Nav.Link>
                             {currentUser 
                                 ? <Nav.Link href="/products/new"><BsGrid1X2 className={style.nav_icon}/></Nav.Link> 
                                 : null 
