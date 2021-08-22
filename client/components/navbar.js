@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -7,7 +8,11 @@ import { BsBag, BsPerson, BsBoxArrowInRight, BsGrid1X2 } from "react-icons/bs";
 import style from '../styles/navbar.module.scss';
 
 const HomeNav = ({ currentUser }) => {
-    console.log('current user in nav ', currentUser)
+    const [cartItem, setCartItem] = useState(0);
+    let cart;
+    if (typeof window !== 'undefined') {
+        cart = JSON.parse(sessionStorage.getItem('cart'));
+    }
     const links = [
         !currentUser && { label: 'Sign In', href: '/auth/signin' },
         currentUser  &&  { label: 'Sign Out', href: '/auth/signout' }
@@ -24,7 +29,7 @@ const HomeNav = ({ currentUser }) => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
             <Container>
-                <Navbar.Brand href="/">woolfolk</Navbar.Brand>
+                <Navbar.Brand href="/">E-Commerce</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
@@ -56,6 +61,9 @@ const HomeNav = ({ currentUser }) => {
                             {/* <Button variant="outline-success">Search</Button> */}
                             {/* {currentUser ? currentUser.email : null} */}
                             <Nav.Link href="/auth/signin"><BsBag className={style.nav_icon}/></Nav.Link>
+                            <div style={{position: 'absolute', right: '18.5%'}}>
+                                {cart ? cart.length : null}
+                            </div>
                             {currentUser 
                                 ? <Nav.Link href="/products/new"><BsGrid1X2 className={style.nav_icon}/></Nav.Link> 
                                 : null 
