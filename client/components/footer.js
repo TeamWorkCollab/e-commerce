@@ -6,7 +6,7 @@ import Router from 'next/router';
 
 import { BsBag, BsPerson, BsBoxArrowInRight, BsGrid1X2 } from "react-icons/bs";
 // import { BsPerson } from "react-icons/bs";
-import styles from '../styles/footer.module.scss';
+import styles from '../styles/components/footer.module.scss';
 
 const Footer = ({ currentUser }) => { 
 

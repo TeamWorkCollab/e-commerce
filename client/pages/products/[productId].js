@@ -1,23 +1,34 @@
+import { useState } from 'react';
 import styles from '../../styles/product_show.module.scss';
 import Button from '../../components/button';
+import Sidebar from '../../components/sidebar';
 
 const ProductShow = ({product}) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleSidebar = () => {
+        setIsOpen((prevState) => !prevState)
+    }
+    console.log('isOPEN ', isOpen)
     // let cart = sessionStorage.getItem('cart');
     // console.log('cart in session ', cart)
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.left_container}>
-                <img className={styles.product_img} src={product.productUrl}/> 
-            </div>
-            <div className={styles.right_container}>
-                <div className={styles.product_info}>
-                    <h1 className={styles.product_name}>{product.name}</h1>
-                    <div className={styles.product_details}>{product.type}</div>
-                    <p className={styles.product_price}>$ {product.price}</p>
-                    <p className={styles.product_details}>{product.details}</p>
-                    <Button product={product}/>
+        <div style={{display: 'flex'}}>
+            <div className={styles.wrapper}>
+                <div className={styles.left_container}>
+                    <img className={styles.product_img} src={product.productUrl}/> 
                 </div>
+                <div className={styles.right_container}>
+                    <div className={styles.product_info}>
+                        <h1 className={styles.product_name}>{product.name}</h1>
+                        <div className={styles.product_details}>{product.type}</div>
+                        <p className={styles.product_price}>$ {product.price}</p>
+                        <p className={styles.product_details}>{product.details}</p>
+                        <Button product={product} toggleSidebar={toggleSidebar} />
+                    </div>
+                </div>
+                
             </div>
+            <Sidebar open={isOpen} onClose={toggleSidebar} width={'80%'} zIndex={'100'}/>
         </div>
     )
 }
