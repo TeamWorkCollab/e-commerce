@@ -5,7 +5,7 @@ import Router from 'next/router';
 
 import { BsBag, BsPerson, BsBoxArrowInRight, BsGrid1X2 } from "react-icons/bs";
 // import { BsPerson } from "react-icons/bs";
-import style from '../styles/navbar.module.scss';
+import style from '../styles/components/navbar.module.scss';
 
 const HomeNav = ({ currentUser }) => {
     const [cartItem, setCartItem] = useState(0);
