@@ -10,7 +10,7 @@ const ProductBag = ({productDetails}) => {
                 <img className={styles.img} src={productDetails.productUrl}/>
             </div>
             <div className={styles.product_info}>
-                <p>{productDetails.name}</p>
+                <span>{productDetails.name}</span> <span>x {productDetails.count}</span>
                 <p className={styles.size}>{productDetails.size.map(size => size)}</p>
             </div>
             <div className={styles.price}>
