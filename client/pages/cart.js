@@ -7,7 +7,18 @@ const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     useEffect(() => {
         const storage = JSON.parse(window.sessionStorage.getItem('cart'));
-        setCartItems(storage)
+        let sortStorage = [];
+
+        storage.forEach(item => {
+            let index = sortStorage.findIndex(x => x.id === item.id);
+            if (index > -1) {
+                sortStorage[index].count++;
+            } else {
+                sortStorage.push({...item, count: 1});
+            }
+  
+        })
+        setCartItems(sortStorage)
         }, [])
     
     console.log('cart ', cartItems);
@@ -70,7 +81,7 @@ const Cart = () => {
                     <hr />
                     <div className={styles.inline_form}>
                         <span>Subtotal</span>
-                        <span>$ {cartItems ? (cartItems.reduce((preValue, currentValue) => preValue + currentValue.price, 0)) : 0}</span>
+                        <span>$ {cartItems ? (cartItems.reduce((preValue, currentValue) => preValue + currentValue.price * currentValue.count, 0)) : 0}</span>
                     </div>
                     <div className={styles.inline_form}>
                         <span>Shipping</span>
@@ -79,7 +90,7 @@ const Cart = () => {
                     <hr />
                     <div className={styles.inline_form}>
                         <span>Total</span>
-                        <span>USD $ {cartItems ? (cartItems.reduce((preValue, currentValue) => preValue + currentValue.price, 0)) : 0}</span>
+                        <span>USD $ {cartItems ? (cartItems.reduce((preValue, currentValue) => preValue + currentValue.price * currentValue.count, 0)) : 0}</span>
                     </div>
                 </div>
             </div>
