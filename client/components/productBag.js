@@ -3,7 +3,6 @@ import Router from 'next/router';
 
 const ProductBag = ({productDetails}) => {
     
-    console.log('inside component ', productDetails)
     return (
         <div className={styles.container}>
             <div className={styles.img_container}>

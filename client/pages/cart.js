@@ -5,24 +5,13 @@ import CustomButton from '../components/customButton';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
+
     useEffect(() => {
         const storage = JSON.parse(window.sessionStorage.getItem('cart'));
-        let sortStorage = [];
-
-        storage.forEach(item => {
-            let index = sortStorage.findIndex(x => x.id === item.id);
-            if (index > -1) {
-                sortStorage[index].count++;
-            } else {
-                sortStorage.push({...item, count: 1});
-            }
-  
-        })
-        setCartItems(sortStorage)
+        setCartItems(storage)
         }, [])
-    
-    console.log('cart ', cartItems);
 
+        
     return (
         <div className={styles.wrapper}>
             <div className={styles.container}>

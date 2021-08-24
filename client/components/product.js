@@ -3,7 +3,6 @@ import Router from 'next/router';
 import Link from 'next/link';
 
 const Product = ({productDetails}) => {
-    console.log('product details in product details', productDetails)
     const onClick = () => {
         
     }

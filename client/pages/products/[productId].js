@@ -9,7 +9,6 @@ const ProductShow = ({product}) => {
     const toggleSidebar = () => {
         setIsOpen((prevState) => !prevState)
     }
-    console.log('isOPEN ', isOpen)
     // useEffect(() => {
     //     if (sessionStorage.getItem('cart')) {
     //         let newCart = JSON.parse(sessionStorage.getItem('cart'));
@@ -58,7 +57,6 @@ const ProductShow = ({product}) => {
             } else {
                 product.count = 1;
                 let newCart = [...currentCart, product];
-                console.log('NEW CART AFTER PUSH ', newCart)
                 sessionStorage.setItem('cart', JSON.stringify(newCart));
                 setCartItems([...newCart]);
                 toggleSidebar();

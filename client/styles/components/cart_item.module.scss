@@ -33,14 +33,16 @@
     height: 30px;
     background-color: white;
     width: 50%;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     .button {
       border: none;
       background-color: white;
+      font-weight: lighter;
+      font-size: large;
     }
     .number {
-      margin: 0 5%;
+      margin: 0 7%;
     }
   }
 }
