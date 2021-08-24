@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import styles from '../styles/components/sidebar.module.scss';
 import CartItem from './cartItem';
 
-const Sidebar = ({ open, onClose, width, zIndex }) => {
-    const [cartItems, setCartItems] = useState([]);
+const Sidebar = ({ open, onClose, width, zIndex, cart }) => {
+    const [cartItems, setCartItems] = useState([cart]);
     useEffect(() => {
         const storage = JSON.parse(window.sessionStorage.getItem('cart'));
         let sortStorage = [];
@@ -39,9 +39,14 @@ const Sidebar = ({ open, onClose, width, zIndex }) => {
                                 </div>
                                
                                 <div className={styles.sidebar_cart_items}>
-                                    {cartItems.map(item => (
-                                        <CartItem productDetails={item} />
-                                    ))}
+                                    {cart.length > 0 
+                                        ?   cart.map(item => (
+                                                <CartItem key={item.id} cartItem={item} />
+                                            )) 
+                                        :   cartItems.map(item => (
+                                                <CartItem  key={item.id} cartItem={item} />
+                                            ))
+                                    }
                                 </div>
                             </div>
                             <div className={styles.bottom}>

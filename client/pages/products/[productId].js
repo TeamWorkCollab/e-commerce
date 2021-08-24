@@ -1,16 +1,78 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../../styles/product_show.module.scss';
 import Button from '../../components/button';
 import Sidebar from '../../components/sidebar';
 
-const ProductShow = ({product}) => {
+const ProductShow = ({product}) => { 
     const [isOpen, setIsOpen] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
     const toggleSidebar = () => {
         setIsOpen((prevState) => !prevState)
     }
     console.log('isOPEN ', isOpen)
-    // let cart = sessionStorage.getItem('cart');
-    // console.log('cart in session ', cart)
+    // useEffect(() => {
+    //     if (sessionStorage.getItem('cart')) {
+    //         let newCart = JSON.parse(sessionStorage.getItem('cart'));
+    //         newCart.push(props.product)
+    //         let newStore = JSON.stringify(newCart)
+    //         sessionStorage.setItem('cart', newStore);
+    //         //Router.reload(window.location.pathname);
+    //         toggleSidebar();
+    //     } else {
+    //         let cart = JSON.stringify([props.product])
+    //         sessionStorage.setItem('cart', cart);
+    //         toggleSidebar();
+    //         //Router.reload(window.location.pathname)
+    //     }
+    // }, [cartItems]);
+
+    // const addItem = (item) => {
+    //     if (sessionStorage.getItem('cart')) {
+    //         let newCart = JSON.parse(sessionStorage.getItem('cart'));
+    //         newCart.push(props.product)
+    //         let newStore = JSON.stringify(newCart)
+    //         sessionStorage.setItem('cart', newStore);
+    //         //Router.reload(window.location.pathname);
+    //         props.toggleSidebar();
+    //     } else {
+    //         let cart = JSON.stringify([props.product])
+    //         sessionStorage.setItem('cart', cart);
+    //         props.toggleSidebar();
+    //         //Router.reload(window.location.pathname)
+    //     }
+    // }
+
+    const addItem = (item) => {
+
+    }
+
+    const onClick = () => {
+        if (sessionStorage.getItem('cart')) {
+            let currentCart = JSON.parse(sessionStorage.getItem('cart'));
+            let index = currentCart.findIndex(x => x.id === product.id);
+            if (index > -1) {
+                currentCart[index].count ++;
+                sessionStorage.setItem('cart', JSON.stringify(currentCart));
+                setCartItems(currentCart);
+                toggleSidebar();
+            } else {
+                product.count = 1;
+                let newCart = [...currentCart, product];
+                console.log('NEW CART AFTER PUSH ', newCart)
+                sessionStorage.setItem('cart', JSON.stringify(newCart));
+                setCartItems([...newCart]);
+                toggleSidebar();
+            }
+        } else {
+            product.count = 1;
+            let cart = JSON.stringify([product])
+            sessionStorage.setItem('cart', cart);
+            setCartItems([{...product}]);
+            toggleSidebar();
+            //Router.reload(window.location.pathname)
+        }
+    }
+
     return (
         <div style={{display: 'flex'}}>
             <div className={styles.wrapper}>
@@ -23,12 +85,12 @@ const ProductShow = ({product}) => {
                         <div className={styles.product_details}>{product.type}</div>
                         <p className={styles.product_price}>$ {product.price}</p>
                         <p className={styles.product_details}>{product.details}</p>
-                        <Button product={product} toggleSidebar={toggleSidebar} />
+                        <button product={product} onClick={onClick} className={styles.button}>add item</button>
                     </div>
                 </div>
                 
             </div>
-            <Sidebar open={isOpen} onClose={toggleSidebar} width={'80%'} zIndex={'100'}/>
+            <Sidebar open={isOpen} onClose={toggleSidebar} width={'80%'} zIndex={'100'} cart={cartItems}/>
         </div>
     )
 }
