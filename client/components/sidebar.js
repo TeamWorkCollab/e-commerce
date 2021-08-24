@@ -1,31 +1,28 @@
 import { useEffect, useState } from 'react';
+import Router from 'next/router';
 import styles from '../styles/components/sidebar.module.scss';
 import CartItem from './cartItem';
 
 const Sidebar = ({ open, onClose, width, zIndex, cart }) => {
-    const [cartItems, setCartItems] = useState([cart]);
-    useEffect(() => {
-        const storage = JSON.parse(window.sessionStorage.getItem('cart'));
-        let sortStorage = [];
+    const [cartItems, setCartItems] = useState(cart);
+    const [total, setTotal] = useState(cart.reduce((preValue, currentValue) => preValue + currentValue.price * currentValue.count, 0));
 
-        if (storage) {
-            storage.forEach(item => {
-                let index = sortStorage.findIndex(x => x.id === item.id);
-                if (index > -1) {
-                    sortStorage[index].count++;
-                } else {
-                    sortStorage.push({...item, count: 1});
-                }
-      
-            })
-            setCartItems(sortStorage)
-        }
-    }, [])
+    useEffect(() => {
+        setCartItems(cart);
+    }, [cart])
     
-    console.log('sidebar cart ', cartItems);
+    const updateTotal = (newTotal) => {
+       setTotal(newTotal) 
+    }
+
+    const updateCart = (newCart) => {
+        setCartItems([...newCart])
+    }
+
     const onClick = () => {
         onClose()
     }
+
 
     return (
         <>
@@ -41,10 +38,10 @@ const Sidebar = ({ open, onClose, width, zIndex, cart }) => {
                                 <div className={styles.sidebar_cart_items}>
                                     {cart.length > 0 
                                         ?   cart.map(item => (
-                                                <CartItem key={item.id} cartItem={item} />
+                                                <CartItem key={item.id} cartItem={item} total={total} updateTotal={updateTotal} updateCart={updateCart}/>
                                             )) 
                                         :   cartItems.map(item => (
-                                                <CartItem  key={item.id} cartItem={item} />
+                                                <CartItem  key={item.id} cartItem={item} total={total} updateTotal={updateTotal} updateCart={updateCart}/>
                                             ))
                                     }
                                 </div>
@@ -52,10 +49,10 @@ const Sidebar = ({ open, onClose, width, zIndex, cart }) => {
                             <div className={styles.bottom}>
                                 <div className={styles.total}>
                                     <p>subtotal</p>
-                                    <p>$ 500</p>
+                                    <p>$ {cartItems.reduce((preValue, currentValue) => preValue + currentValue.price * currentValue.count, 0)}</p>
                                 </div>
                                 <p className={styles.shipping_note}>Shipping and discount coders are added at checkout</p>
-                                <button className={styles.checkout_button}>
+                                <button className={styles.checkout_button} onClick={() => Router.push('/cart')}>
                                     Checkout
                                 </button>
 

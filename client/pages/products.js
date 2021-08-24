@@ -2,9 +2,6 @@ import styles from '../styles/products.module.scss';
 import Product from '../components/product';
 
 const Products = ({ currentUser, products }) => {
-    console.log('products list in products page ', products)
-    console.log('current user in products page ', currentUser)
-
     // const renderProducts = (products) => {
     //     console.log('PRODUCT IN FUC ')
     //     if (products.length > 0) {
