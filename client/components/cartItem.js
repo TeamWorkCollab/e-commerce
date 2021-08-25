@@ -1,12 +1,14 @@
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styles from '../styles/components/cart_item.module.scss';
+import CartItemContext from '../context/cartItemContext';
 
 const CartItem = ({cartItem, total, updateTotal, updateCart}) => {
-
+    const { updateCartItemCount } = useContext(CartItemContext);
     const [count, setCount] = useState(cartItem.count);
 
     const onMinus = () => {
+        updateCartItemCount(-1);
         let currentCart = JSON.parse(sessionStorage.getItem('cart'));
         let index = currentCart.findIndex(x => x.id === cartItem.id);
         if (index > -1) {
@@ -18,6 +20,7 @@ const CartItem = ({cartItem, total, updateTotal, updateCart}) => {
     }
 
     const onPlus = () => {
+        updateCartItemCount(1);
         let currentCart = JSON.parse(sessionStorage.getItem('cart'));
         let index = currentCart.findIndex(x => x.id === cartItem.id);
         if (index > -1) {
@@ -37,7 +40,6 @@ const CartItem = ({cartItem, total, updateTotal, updateCart}) => {
             </div>
             <div className={styles.product_info}>
                 <span>{cartItem.name}</span> 
-                {/* <p className={styles.size}>{cartItem.size.map(size => size)}</p> */}
                 <div className={styles.count}>
                     <button className={styles.button} onClick={onMinus}>-</button>
                     <div className={styles.number}>{count}</div>

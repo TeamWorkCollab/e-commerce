@@ -1,51 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import styles from '../../styles/product_show.module.scss';
 import Button from '../../components/button';
 import Sidebar from '../../components/sidebar';
+import CartItemContext from '../../context/cartItemContext';
 
-const ProductShow = ({product}) => { 
+const ProductShow = ({product}) => {
+    const { updateCartItemCount } = useContext(CartItemContext);
     const [isOpen, setIsOpen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const toggleSidebar = () => {
         setIsOpen((prevState) => !prevState)
     }
-    // useEffect(() => {
-    //     if (sessionStorage.getItem('cart')) {
-    //         let newCart = JSON.parse(sessionStorage.getItem('cart'));
-    //         newCart.push(props.product)
-    //         let newStore = JSON.stringify(newCart)
-    //         sessionStorage.setItem('cart', newStore);
-    //         //Router.reload(window.location.pathname);
-    //         toggleSidebar();
-    //     } else {
-    //         let cart = JSON.stringify([props.product])
-    //         sessionStorage.setItem('cart', cart);
-    //         toggleSidebar();
-    //         //Router.reload(window.location.pathname)
-    //     }
-    // }, [cartItems]);
-
-    // const addItem = (item) => {
-    //     if (sessionStorage.getItem('cart')) {
-    //         let newCart = JSON.parse(sessionStorage.getItem('cart'));
-    //         newCart.push(props.product)
-    //         let newStore = JSON.stringify(newCart)
-    //         sessionStorage.setItem('cart', newStore);
-    //         //Router.reload(window.location.pathname);
-    //         props.toggleSidebar();
-    //     } else {
-    //         let cart = JSON.stringify([props.product])
-    //         sessionStorage.setItem('cart', cart);
-    //         props.toggleSidebar();
-    //         //Router.reload(window.location.pathname)
-    //     }
-    // }
 
     const addItem = (item) => {
 
     }
 
     const onClick = () => {
+        updateCartItemCount(1);
         if (sessionStorage.getItem('cart')) {
             let currentCart = JSON.parse(sessionStorage.getItem('cart'));
             let index = currentCart.findIndex(x => x.id === product.id);
@@ -67,10 +39,10 @@ const ProductShow = ({product}) => {
             sessionStorage.setItem('cart', cart);
             setCartItems([{...product}]);
             toggleSidebar();
-            //Router.reload(window.location.pathname)
         }
     }
 
+    
     return (
         <div style={{display: 'flex', maxHeight: '100vh'}}>
             <div className={styles.wrapper}>

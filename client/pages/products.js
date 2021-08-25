@@ -12,7 +12,7 @@ const Products = ({ currentUser, products }) => {
     //             ))
     //         )
     //     }
-    // }
+    // } 
 
     return (
         <div className={styles.wrapper}>

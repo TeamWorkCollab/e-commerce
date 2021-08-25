@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -6,9 +6,11 @@ import Router from 'next/router';
 import { BsBag, BsPerson, BsBoxArrowInRight, BsGrid1X2 } from "react-icons/bs";
 // import { BsPerson } from "react-icons/bs";
 import style from '../styles/components/navbar.module.scss';
+import CartItemContext from '../context/cartItemContext';
 
 const HomeNav = ({ currentUser }) => {
     const [cartItem, setCartItem] = useState(0);
+    const {cartItemCount} = useContext(CartItemContext);
     let cart;
     if (typeof window !== 'undefined') {
         cart = JSON.parse(sessionStorage.getItem('cart'));
@@ -29,7 +31,8 @@ const HomeNav = ({ currentUser }) => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
             <Container>
-                <Navbar.Brand href="/">E-Commerce</Navbar.Brand>
+                <Navbar.Brand style={{cursor: 'pointer'}} onClick={() => Router.push('/')}>E-Commerce</Navbar.Brand>
+                {/* <Navbar.Brand href="/">E-Commerce</Navbar.Brand> */}
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
@@ -40,11 +43,14 @@ const HomeNav = ({ currentUser }) => {
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                     </NavDropdown> */}
-                        <Nav.Link href="/products">Products</Nav.Link>
-                        {/* <Nav.Link onClick={() => Router.push('/products')}>Products</Nav.Link> */}
-                        <Nav.Link href="/locations">Locations</Nav.Link>
-                        <Nav.Link href="/info">Info</Nav.Link>
-                        <Nav.Link href="/story">Story</Nav.Link>
+                        {/* <Nav.Link href="/products">Products</Nav.Link> */}
+                        <Nav.Link onClick={() => Router.push('/products')}>Products</Nav.Link>
+                        <Nav.Link onClick={() => Router.push('/locations')}>Locations</Nav.Link>
+                        <Nav.Link onClick={() => Router.push('/info')}>Info</Nav.Link>
+                        <Nav.Link onClick={() => Router.push('/story')}>Story</Nav.Link>
+                        {/* <Nav.Link href="/locations">Locations</Nav.Link> */}
+                        {/* <Nav.Link href="/info">Info</Nav.Link>
+                        <Nav.Link href="/story">Story</Nav.Link> */}
                     </Nav>
                     <Nav >
                     {/* <Nav.Link href="#deets">More deets</Nav.Link>
@@ -62,7 +68,7 @@ const HomeNav = ({ currentUser }) => {
                             {/* {currentUser ? currentUser.email : null} */}
                             <Nav.Link href="/cart" className={style.notification}>
                                 <BsBag className={style.nav_icon}/>
-                                {cart ? <span className={style.cart_notification}>{cart.length}</span> : null}
+                                {cartItemCount && cartItemCount > 0 ? <span className={style.cart_notification}>{cartItemCount}</span> : null}
                             </Nav.Link>
                             {currentUser 
                                 ? <Nav.Link href="/products/new"><BsGrid1X2 className={style.nav_icon}/></Nav.Link> 
