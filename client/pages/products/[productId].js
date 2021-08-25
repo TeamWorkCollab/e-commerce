@@ -72,7 +72,7 @@ const ProductShow = ({product}) => {
     }
 
     return (
-        <div style={{display: 'flex'}}>
+        <div style={{display: 'flex', maxHeight: '100vh'}}>
             <div className={styles.wrapper}>
                 <div className={styles.left_container}>
                     <img className={styles.product_img} src={product.productUrl}/> 
