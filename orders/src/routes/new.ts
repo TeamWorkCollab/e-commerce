@@ -17,28 +17,57 @@ router.post('/api/orders', requireAuth,
             .not()
             .isEmpty()
             // check if id is mongo id
-            .custom((input: string) => mongoose.Types.ObjectId.isValid(input))
+            //.custom((input: string) => mongoose.Types.ObjectId.isValid(input))
             .withMessage('ProductId must be provided')
     ], 
     validateRequest, 
     async (req: Request, res: Response) => {
         const { productId } = req.body;
-        const products = await Product.find({});
+        console.log('PRODUCT ID FROM BODY ', productId)
+        
+        let products = [];
+        for (const id in productId) {
+            console.log('PROCESS ID ', id)
+            const product = await Product.findById(productId[id]);
+            console.log('Find product Id ', id)
+            if (!product) {
+                throw new NotFoundError();
+            }
+            // make sure this product is not reserved
+            // run query to look at all orders. Find an order where the ticket is the ticket we just found 
+            // and the orders status is not cancelled.
+            // if we find an order from that means the product is reserved
+            // const isReserved = await product.isReserved();
+            const isReserved = await product.isReserved();
+
+            if (isReserved) {
+                throw new BadRequestError('Product is already reserved');
+            }
+            products.push(product);
+        }
+        // console.log('PRODUCTS RETURN ', products)
+        // const products = await Product.find({ 'id': { $in: productId } });
+        // if (!products) {
+        //     throw new NotFoundError();
+        // }
         // console.log('ALL PRODUCTS ', products)
         // find the product the user trying to order in database
-        const product = await Product.findById(productId);
-        if (!product) {
-            throw new NotFoundError();
-        }
-        //console.log('PRODUCT FOUND ', product);
+        // const product = await Product.findById(productId);
+        // if (!product) {
+        //     throw new NotFoundError();
+        // }
+
+        //console.log('PRODUCT FOUND ', products);
         // make sure this product is not reserved
         // run query to look at all orders. Find an order where the ticket is the ticket we just found 
         // and the orders status is not cancelled.
         // if we find an order from that means the product is reserved
-        const isReserved = await product.isReserved();
-        if (isReserved) {
-            throw new BadRequestError('Product is already reserved');
-        }
+        // const isReserved = await product.isReserved();
+        //const isReserved = await products.isReserved();
+
+        // if (isReserved) {
+        //     throw new BadRequestError('Product is already reserved');
+        // }
 
         // calculate an expiration date for the order
         const expiration = new Date();
@@ -49,9 +78,10 @@ router.post('/api/orders', requireAuth,
             userId: req.currentUser!.id,
             status: OrderStatus.Created,
             expiresAt: expiration,
-            product
+            products
         });
         await order.save();
+        console.log('ORDER CREATED ', order)
 
         // publish an event saying that order was created
         // pubish an event saying that order was created
@@ -61,19 +91,21 @@ router.post('/api/orders', requireAuth,
             status: order.status,
             userId: order.userId,
             expiresAt: order.expiresAt.toISOString(),
-            product: {
-                id: product.id,
-                userId: product.userId,
-                price: product.price,
-                name: product.name,
-                details: product.details,
-                //size: product.size,
-                type: product.type,
-                productUrl: product.productUrl,
-                //color: product.color
-                //reviews: product.reviews
-            }
+            // product: {
+            //     id: product.id,
+            //     userId: product.userId,
+            //     price: product.price,
+            //     name: product.name,
+            //     details: product.details,
+            //     //size: product.size,
+            //     type: product.type,
+            //     productUrl: product.productUrl,
+            //     //color: product.color
+            //     //reviews: product.reviews
+            // }
+            products,
         })
+        console.log('SUCCESS PUBLISHING ORDER ', { id: order.id, version: order.version, status: order.status, userId: order.userId, expiresAt: order.expiresAt.toISOString(), products })
 
         res.status(201).send(order);
     }

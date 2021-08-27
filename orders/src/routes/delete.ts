@@ -27,9 +27,10 @@ router.delete(
         new OrderCancelledPublisher(natsWrapper.client).publish({
             id: order.id,
             version: order.version,
-            product: {
-                id: order.product.id,
-            }
+            // product: {
+            //     id: order.product.id,
+            // }
+            products: order.products
         });
 
         res.status(204).send(order);

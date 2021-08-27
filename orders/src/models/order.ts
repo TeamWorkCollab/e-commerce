@@ -9,14 +9,14 @@ interface OrderAttrs {
     userId: string;
     status: OrderStatus;
     expiresAt: Date;
-    product: ProductDoc;
+    products: ProductDoc[];
 }
 
 interface OrderDoc extends mongoose.Document {
     userId: string;
     status: OrderStatus;
     expiresAt: Date;
-    product: ProductDoc;
+    products: ProductDoc[];
     version: number;
 }
 
@@ -39,8 +39,8 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Date,
         //required: true
     },
-    product: {
-        type: mongoose.Schema.Types.ObjectId,
+    products: {
+        type: [mongoose.Schema.Types.ObjectId],
         ref: 'Product'
     }
 }, {
