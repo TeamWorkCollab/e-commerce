@@ -13,23 +13,24 @@ const EXPIRATION_WINDOW_SECONDS = 1 * 60;
 
 router.post('/api/orders', requireAuth, 
     [
-        body('productId')
+        body('products')
             .not()
             .isEmpty()
             // check if id is mongo id
             //.custom((input: string) => mongoose.Types.ObjectId.isValid(input))
-            .withMessage('ProductId must be provided')
+            .withMessage('Products must be provided')
     ], 
     validateRequest, 
     async (req: Request, res: Response) => {
-        const { productId } = req.body;
-        console.log('PRODUCT ID FROM BODY ', productId)
-        
-        let products = [];
-        for (const id in productId) {
-            console.log('PROCESS ID ', id)
-            const product = await Product.findById(productId[id]);
-            console.log('Find product Id ', id)
+        const { products } = req.body;
+        console.log('PRODUCS LIST FROM BODY ', products);
+        let orderItems = [];
+        let idList = [];
+        let cartList = [];
+        for (const order in products) {
+            console.log('PROCESS order ', order)
+            const product = await Product.findById(products[order].id);
+            console.log(`Find product with id ${products[order].id} `, products[order])
             if (!product) {
                 throw new NotFoundError();
             }
@@ -43,7 +44,8 @@ router.post('/api/orders', requireAuth,
             if (isReserved) {
                 throw new BadRequestError('Product is already reserved');
             }
-            products.push(product);
+            idList.push(products[order].id);
+            cartList.push(products[order]);
         }
         // console.log('PRODUCTS RETURN ', products)
         // const products = await Product.find({ 'id': { $in: productId } });
@@ -72,14 +74,16 @@ router.post('/api/orders', requireAuth,
         // calculate an expiration date for the order
         const expiration = new Date();
         expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);
-
+        //console.log('CART LIST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', cartList)
         // build the order and save it to the database
         const order = Order.build({
             userId: req.currentUser!.id,
             status: OrderStatus.Created,
             expiresAt: expiration,
-            products
+            products: idList
         });
+        console.log('CODE REACH HERE         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', order)
+
         await order.save();
         console.log('ORDER CREATED ', order)
 
@@ -103,9 +107,9 @@ router.post('/api/orders', requireAuth,
             //     //color: product.color
             //     //reviews: product.reviews
             // }
-            products,
+            products: cartList,
         })
-        console.log('SUCCESS PUBLISHING ORDER ', { id: order.id, version: order.version, status: order.status, userId: order.userId, expiresAt: order.expiresAt.toISOString(), products })
+        console.log('SUCCESS PUBLISHING ORDER ', { id: order.id, version: order.version, status: order.status, userId: order.userId, expiresAt: order.expiresAt.toISOString(), products: cartList })
 
         res.status(201).send(order);
     }

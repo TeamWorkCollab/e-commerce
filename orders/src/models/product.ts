@@ -15,6 +15,7 @@ interface ProductAttrs {
     type: string;
     productUrl: string;
     category: string[];
+    count: number;
 }
 
 export interface ProductDoc extends mongoose.Document {
@@ -30,6 +31,7 @@ export interface ProductDoc extends mongoose.Document {
     productUrl: string;
     version: number;
     category: string[];
+    count: number;
     isReserved(): Promise<boolean>;
 }
 
@@ -82,6 +84,10 @@ const productSchema = new mongoose.Schema({
     productUrl: {
         type: String,
         required: true
+    },
+    count: {
+        type: Number,
+        //require: true
     }
 }, {
     toJSON: {
@@ -114,6 +120,7 @@ productSchema.statics.build = (attrs: ProductAttrs) => {
         type: attrs.type,
         productUrl: attrs.productUrl,
         category: attrs.category,
+        count: attrs.count,
     });
 };
 

@@ -19,7 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/bull": "^3.15.3",
-    "@vuelaine-ecommerce/common": "^1.0.17",
+    "@vuelaine-ecommerce/common": "^1.0.22",
     "bull": "^3.27.0",
     "node-nats-streaming": "^0.3.2",
     "npm": "^7.20.3",

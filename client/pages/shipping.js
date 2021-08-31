@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from '../styles/cart.module.scss';
 import ProductBag from '../components/productBag';
 import CustomButton from '../components/customButton';
+import useRequest from '../hooks/use-request';
 import Router from 'next/router'; 
 
 const Shipping = () => {
@@ -19,6 +20,21 @@ const Shipping = () => {
         setContactInfo(contact)
     }, [])
 
+    const onPayment = async event => {
+        console.log('CLICK ON PAYMENTT');
+        event.preventDefault();
+        await doRequest();
+    }
+
+    const { doRequest, errors } = useRequest({
+        url: '/api/orders',
+        method: 'post',
+        body: {
+            products: JSON.parse(window.sessionStorage.getItem('cart'))
+        },
+        onSuccess: (order) => Router.push('/orders/[orderId]', `/orders/${order.id}`)
+      });
+    
     console.log('contact info ', contactInfo)
         
     return (
@@ -77,7 +93,7 @@ const Shipping = () => {
                             ?   <input type="submit" className={styles.custom_button_bg_black} value="Continue Shipping" onClick={onShipping}/>
                             :   <input type="submit" className={styles.custom_button_bg_light} value="Continue Shipping" onClick={onShipping}/>
                         } */}
-                        <input type="submit" className={styles.custom_button_bg_black} value="Continue to payment" />
+                        <input type="submit" className={styles.custom_button_bg_black} value="Continue to payment" onClick={onPayment}/>
                         <span style={{marginLeft: '2rem'}}></span>
                         <input type="submit" className={styles.custom_button_bg_clear} value="Return to information" onClick={Router.back}/>
                     </div>
@@ -117,6 +133,7 @@ const Shipping = () => {
                     </div>
                 </div>
             </div>
+            {errors}
         </div>
     )
 };
