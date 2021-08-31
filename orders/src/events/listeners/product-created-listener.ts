@@ -24,7 +24,8 @@ export class ProductCreatedListener extends Listener<ProductCreatedEvent> {
             color,
             type,
             productUrl,
-            category
+            category,
+            count: 0,
         });
 
         await product.save();
