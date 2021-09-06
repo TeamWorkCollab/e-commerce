@@ -41,6 +41,11 @@
   .label {
     margin-top: 1.5rem;
     width: 100%;
+    .sublabel {
+      position: relative;
+      bottom: 0.5rem;
+      font-size: 13px;
+    }
   }
 }
 
@@ -156,7 +161,7 @@
       background-color: #ccc;
     }
 
-    /* When the checkbox is checked, add a blue background */
+    /* When the checkbox is checked, add a black background */
     .container input:checked ~ .checkmark {
       background-color: black;
     }
@@ -185,6 +190,7 @@
       -ms-transform: rotate(45deg);
       transform: rotate(45deg);
     }
+
+    ////////////////
   }
-  ///////////////////////@at-root
 }

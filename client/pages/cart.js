@@ -31,7 +31,6 @@ const Cart = () => {
 
     const verifyContactInfo = () => {
         if (email && firstName && lastName && address && city && state && zipCode && phone) {
-            console.log('TRUE')
             return true;
         } else {
             return false;
@@ -48,10 +47,10 @@ const Cart = () => {
                             Information &nbsp;
                         </span>
                         <span style={{fontWeight: 'lighter'}}>
-                            > Shipping &nbsp;
+                            {'>'} Shipping &nbsp;
                         </span>
                         <span style={{fontWeight: 'lighter'}}>
-                            > Payment
+                            {'>'} Payment
                         </span>
                     </div>
                     <form className={styles.form}>

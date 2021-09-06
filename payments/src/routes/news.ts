@@ -25,7 +25,7 @@ router.post('/api/payments',
     validateRequest,
     async (req: Request, res: Response) => {
         const { token, orderId } = req.body;
-
+        console.log("BODY IN PAYMENT ", req.body)
         const order = await Order.findById(orderId);
 
         if (!order) {
@@ -37,6 +37,8 @@ router.post('/api/payments',
         if(order.status === OrderStatus.Cancelled) {
             throw new BadRequestError('Cannot pay for an cancelled order');
         }
+
+        console.log('ORDER IN PAYMENT ', order)
 
         const charge = await stripe.charges.create({
             currency: 'usd',
@@ -55,7 +57,7 @@ router.post('/api/payments',
             stripeId: payment.stripeId
         });
 
-        res.status(201).send({ id: payment.id });
+        res.status(201).send({ id: payment.id, order: order });
 });
 
 export { router as createChargeRouter };

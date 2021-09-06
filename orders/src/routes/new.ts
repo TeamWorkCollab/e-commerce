@@ -9,6 +9,7 @@ import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
+// Set expiration for order is 1 hours
 const EXPIRATION_WINDOW_SECONDS = 1 * 60;
 
 router.post('/api/orders', requireAuth, 
@@ -82,10 +83,8 @@ router.post('/api/orders', requireAuth,
             expiresAt: expiration,
             products: idList
         });
-        console.log('CODE REACH HERE         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', order)
 
         await order.save();
-        console.log('ORDER CREATED ', order)
 
         // publish an event saying that order was created
         // pubish an event saying that order was created
@@ -109,7 +108,7 @@ router.post('/api/orders', requireAuth,
             // }
             products: cartList,
         })
-        console.log('SUCCESS PUBLISHING ORDER ', { id: order.id, version: order.version, status: order.status, userId: order.userId, expiresAt: order.expiresAt.toISOString(), products: cartList })
+        // console.log('SUCCESS PUBLISHING ORDER ', { id: order.id, version: order.version, status: order.status, userId: order.userId, expiresAt: order.expiresAt.toISOString(), products: cartList })
 
         res.status(201).send(order);
     }

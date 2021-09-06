@@ -5,11 +5,16 @@ import buildClient from "../api/build-client";
 import NavBar from '../components/navbar';
 import Footer from '../components/footer';
 import CartItemContext from "../context/cartItemContext";
+// import Zoom from 'react-reveal/Zoom';
 
 const AppComponent = ({ Component, pageProps, currentUser }) => {
     const [cartItemCount, setCartItemCount] = useState(0);
     const updateCartItemCount = (count) => {
         setCartItemCount(cartItemCount + count);
+    }
+
+    const resetCartItemCount = () => {
+        setCartItemCount(0)
     }
 
     if (typeof window !== 'undefined') {
@@ -26,7 +31,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
             <Head>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            <CartItemContext.Provider value={{ cartItemCount: cartItemCount, updateCartItemCount: updateCartItemCount }}>
+            <CartItemContext.Provider value={{ cartItemCount: cartItemCount, updateCartItemCount: updateCartItemCount, resetCartItemCount: resetCartItemCount }}>
                 <NavBar currentUser={currentUser} />
                 <Component {...pageProps} currentUser={currentUser} />
             </CartItemContext.Provider>  
