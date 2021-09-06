@@ -23,6 +23,7 @@ const Shipping = () => {
     const onPayment = async event => {
         console.log('CLICK ON PAYMENTT');
         event.preventDefault();
+        sessionStorage.setItem('shippingCost', shippingCost);
         await doRequest();
     }
 
@@ -44,13 +45,13 @@ const Shipping = () => {
                     <h1>E-Commerce</h1>
                     <div style={{margin: '0.5rem 0'}}>
                         <span style={{fontWeight: 'lighter'}}>
-                            Information &nbsp;>
+                            Information &nbsp;{'>'}
                         </span>
                         <span style={{fontWeight: 'bolder'}}>
                             &nbsp;Shipping &nbsp;
                         </span>
                         <span style={{fontWeight: 'lighter'}}>
-                            > Payment
+                            {'>'} Payment
                         </span>
                     </div>
                     <form className={styles.form}>

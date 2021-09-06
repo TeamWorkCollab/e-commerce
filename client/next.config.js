@@ -1,5 +1,6 @@
-const path = require('path')
-
+const path = require('path');
+const { config } = require('process');
+//import config from 'react-reveal/globals';
 // module.exports = {
 //     sassOptions: {
 //       includePaths: [path.join(__dirname, 'styles')],
@@ -13,9 +14,17 @@ const path = require('path')
   //   }
   // });
 //to detect and upload file-updates automatically 
+// module.exports = {
+//     webpackDevMiddleware: config => {
+//         config.watchOptions.poll = 300; //every 300 ms
+//         config({ ssrFadeout: true });
+//         return config;
+//     }
+// };
 module.exports = {
-    webpackDevMiddleware: config => {
-        config.watchOptions.poll = 300; //every 300 ms
-        return config;
-    }
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    console.log(config);
+    config.module.rules.map((rule) => console.log(JSON.stringify(rule)));
+    return config;
+  },
 };

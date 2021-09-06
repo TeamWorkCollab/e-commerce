@@ -61,7 +61,7 @@ const Footer = ({ currentUser }) => {
                                 <a className={styles.nav_link} href="#"><IoChatbubblesSharp />&nbsp; Live chat</a>
                             </li>
                             <li className={styles.nav_item}>
-                                <a className={styles.nav_link} href="#"><IoMail />&nbsp; Contact us</a>
+                                <a className={styles.nav_link} href="#"><IoMail />&nbsp; nguyenanhhoanvu@gmail.com</a>
                             </li>
                             <li className={styles.nav_item}>
                                 <a className={styles.nav_link} href="#"><IoStar />&nbsp; Give feedback</a>
