@@ -30,8 +30,8 @@ const HomeNav = ({ currentUser }) => {
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top">
-            <Container>
-                <Navbar.Brand style={{cursor: 'pointer'}} onClick={() => Router.push('/')}>E-Commerce</Navbar.Brand>
+            {/* <Container> */}
+                <Navbar.Brand style={{cursor: 'pointer', marginLeft: '2rem'}} onClick={() => Router.push('/')}>E-Commerce</Navbar.Brand>
                 {/* <Navbar.Brand href="/">E-Commerce</Navbar.Brand> */}
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
@@ -52,7 +52,7 @@ const HomeNav = ({ currentUser }) => {
                         {/* <Nav.Link href="/info">Info</Nav.Link>
                         <Nav.Link href="/story">Story</Nav.Link> */}
                     </Nav>
-                    <Nav >
+                    <Nav style={{marginRight: '2rem'}}>
                     {/* <Nav.Link href="#deets">More deets</Nav.Link>
                     <Nav.Link eventKey={2} href="#memes">
                         Dank memes
@@ -71,7 +71,7 @@ const HomeNav = ({ currentUser }) => {
                                 {cartItemCount && cartItemCount > 0 ? <span className={style.cart_notification}>{cartItemCount}</span> : null}
                             </Nav.Link>
                             {currentUser 
-                                ? <Nav.Link href="/products/new"><BsGrid1X2 className={style.nav_icon}/></Nav.Link> 
+                                ? <Nav.Link href="/admin"><BsGrid1X2 className={style.nav_icon}/></Nav.Link> 
                                 : null 
                             }
                             {currentUser 
@@ -83,7 +83,7 @@ const HomeNav = ({ currentUser }) => {
                         </Form>
                     </Nav>
                 </Navbar.Collapse>
-            </Container>
+            {/* </Container> */}
         </Navbar>
     )
 };

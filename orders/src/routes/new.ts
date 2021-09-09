@@ -85,6 +85,7 @@ router.post('/api/orders', requireAuth,
         });
 
         await order.save();
+        console.log('New order ', order)
 
         // publish an event saying that order was created
         // pubish an event saying that order was created
