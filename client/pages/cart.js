@@ -36,7 +36,7 @@ const Cart = () => {
             return false;
         }
     }
-        
+         
     return (
         <div className={styles.wrapper}>
             <div className={styles.container}>
