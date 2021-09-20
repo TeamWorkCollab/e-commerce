@@ -1,60 +1,57 @@
-.sidebar {
+.sidebar,
+.sidebar_active {
   position: relative;
   height: 100%;
-  //   position: fixed;
-  width: 240px;
-  //   top: 70px;
-  //   left: 0;
+  width: 78px;
   padding: 6px 14px;
-  background: #8b4513;
+  background: #495057;
+  transition: all 0.5s ease;
   .logo_content {
     display: flex;
     flex-wrap: nowrap;
     .logo {
+      pointer-events: none;
+      opacity: 0;
+      width: 0;
+    }
+    .menu_button {
+      cursor: pointer;
       color: white;
-      display: flex;
-      height: 50px;
-      width: 90%;
-      align-items: center;
-      .logo_name {
-        font-size: 20px;
-        font-weight: 400;
-      }
+      position: relative;
+      top: 15px;
+      font-size: 30px;
+      width: 50px;
+      text-align: center;
+      line-height: 50px;
     }
   }
-  .menu_button {
-    cursor: pointer;
-    color: white;
-    position: relative;
-    top: 15px;
-    //left: 90%;
-    font-size: 25px;
-    width: 50px;
-    text-align: center;
-    line-height: 50px;
-    //transform: translateX(-50%);
+  .links_name {
+    opacity: 0;
+    pointer-events: auto;
   }
   ul {
     margin-top: 20px;
-    width: 200px;
-    //background: hotpink;
     list-style: none;
     padding-left: 0;
+    li:hover .tooltip {
+      left: 65px;
+      top: 50%;
+      transition: all 0.5s ease;
+      opacity: 1;
+    }
     li {
-      //background: green;
       position: relative;
       height: 50px;
       width: 100%;
       line-height: 50px;
       a:hover {
-        color: #cd853f;
+        color: #212529;
         background: white;
       }
       a {
         color: white;
         display: flex;
         align-items: center;
-        //justify-content: flex-start;
         text-decoration: none;
         input {
           position: absolute;
@@ -65,13 +62,13 @@
           border-radius: 12px;
           outline: none;
           border: none;
-          background: #cd853f;
+          background: white;
           padding-left: 50px;
           font-size: 18px;
-          color: #ffe4c4;
+          color: #212529;
         }
         input::placeholder {
-          color: #ffe4c4;
+          color: #212529;
         }
         .icon {
           margin-left: 8px;
@@ -88,15 +85,35 @@
       .icon_search {
         position: absolute;
         z-index: 99;
-        color: white;
+        color: #212529;
         font-size: 22px;
         top: 22%;
-        left: 5%;
+        left: 10%;
+      }
+      // .icon_search:hover {
+      //   background: #ffe4c4;
+      //   color: #1d1b31;
+      // }
+      .tooltip {
+        position: absolute;
+        height: 35px;
+        width: 122px;
+        left: 122px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 6px;
+        line-height: 35px;
+        text-align: center;
+        background: white;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        pointer-events: none;
       }
     }
   }
   .profile_content {
     position: absolute;
+    background: #6c757d;
     color: white;
     bottom: 0;
     left: 0;
@@ -133,9 +150,87 @@
         //transform: translateX(-50%);
         min-width: 50px;
         line-height: 50px;
-        font-size: 20px;
+        font-size: 25px;
         border-radius: 8px;
       }
+    }
+  }
+}
+
+.sidebar {
+  .profile_content {
+    .profile {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .profile_details {
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
+      .log_out {
+        position: absolute;
+        right: 20px;
+      }
+    }
+  }
+}
+
+.sidebar_active {
+  width: 240px;
+  .logo_content {
+    display: flex;
+    flex-wrap: nowrap;
+    .logo {
+      color: white;
+      display: flex;
+      height: 50px;
+      width: 85%;
+      align-items: center;
+      pointer-events: none;
+      opacity: 1;
+      .logo_name {
+        font-size: 20px;
+        font-weight: 400;
+      }
+    }
+    .menu_button {
+      cursor: pointer;
+      color: white;
+      top: 15px;
+      font-size: 25px;
+      width: 50px;
+      text-align: center;
+      line-height: 50px;
+    }
+  }
+  .links_name {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  ul {
+    margin-top: 20px;
+    list-style: none;
+    padding-left: 0;
+    li {
+      .icon_search {
+        position: absolute;
+        z-index: 99;
+        color: white;
+        font-size: 22px;
+        top: 22%;
+        left: 7%;
+      }
+      .icon_search:hover {
+        background: #ffe4c4;
+        color: #1d1b31;
+      }
+    }
+    li:hover .tooltip {
+      top: 50%;
+      transition: all 0.5s ease;
+      opacity: 0;
     }
   }
 }
