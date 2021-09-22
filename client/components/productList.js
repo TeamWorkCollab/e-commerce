@@ -2,6 +2,7 @@
 //import Router from 'next/router';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import ProductAdminPage from './productAdminPage';
 import Link from 'next/link';
 
 const ProductList = ({productDetails}) => {
@@ -18,7 +19,8 @@ const ProductList = ({productDetails}) => {
 
     return (
         <div>
-            {productList ? productList.map(product => (<p>{product.name}</p>)) : <p>No product</p>}
+            {/* {productList ? productList.map(product => (<p>{product.name}</p>)) : <p>No product</p>} */}
+            {productList ? productList.map(product => (<ProductAdminPage product={product}/>)) : <p>No product</p>}
         </div>
     )
 }

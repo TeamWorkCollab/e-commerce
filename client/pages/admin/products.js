@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from '../../styles/admin_pages/products.module.scss';
 import SidebarNav from '../../components/sidebarNav';
-// import OrderList from '../../components/orderList';
+import ProductList from '../../components/productList';
 
 function Products() {
 
@@ -15,6 +15,7 @@ function Products() {
             <div className={styles.main}>
                 <div className={styles.main_container}>
                     Products Pages
+                    <ProductList />
                 </div>
             </div>
         </div>
