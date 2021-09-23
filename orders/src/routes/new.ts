@@ -23,11 +23,13 @@ router.post('/api/orders', requireAuth,
     ], 
     validateRequest, 
     async (req: Request, res: Response) => {
-        const { products } = req.body;
-        console.log('PRODUCS LIST FROM BODY ', products);
+        console.log('BODY REQUEST ', req.body)
+        const { products, contactInfo, shippingCost } = req.body;
+        //console.log('PRODUCS LIST FROM BODY ', products);
         let orderItems = [];
         let idList = [];
         let cartList = [];
+        let quantity = [];
         for (const order in products) {
             console.log('PROCESS order ', order)
             const product = await Product.findById(products[order].id);
@@ -47,6 +49,7 @@ router.post('/api/orders', requireAuth,
             }
             idList.push(products[order].id);
             cartList.push(products[order]);
+            quantity.push({productId: products[order].id, amount: products[order].count})
         }
         // console.log('PRODUCTS RETURN ', products)
         // const products = await Product.find({ 'id': { $in: productId } });
@@ -75,13 +78,17 @@ router.post('/api/orders', requireAuth,
         // calculate an expiration date for the order
         const expiration = new Date();
         expiration.setSeconds(expiration.getSeconds() + EXPIRATION_WINDOW_SECONDS);
-        //console.log('CART LIST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', cartList)
         // build the order and save it to the database
         const order = Order.build({
             userId: req.currentUser!.id,
             status: OrderStatus.Created,
             expiresAt: expiration,
-            products: idList
+            products: idList,
+            createdOn: new Date().toISOString(),
+            quantity: quantity,
+            total: products.reduce((preValue: number, currentValue: any) => preValue + currentValue.price * currentValue.count, shippingCost ? 5 : 0),
+            shipTo: contactInfo.firstName + ' ' + contactInfo.lastName,
+            email: contactInfo.email
         });
 
         await order.save();
@@ -95,6 +102,10 @@ router.post('/api/orders', requireAuth,
             status: order.status,
             userId: order.userId,
             expiresAt: order.expiresAt.toISOString(),
+            // total: order.total,
+            // shipTo: order.shipTo,
+            // email: order.email,
+            // createdOn: order.createdOn
             // product: {
             //     id: product.id,
             //     userId: product.userId,
