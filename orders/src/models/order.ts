@@ -10,6 +10,11 @@ interface OrderAttrs {
     status: OrderStatus;
     expiresAt: Date;
     products: ProductDoc[];
+    shipTo: string;
+    email: string;
+    quantity: {productId: string, amount: number}[];
+    total: number;
+    createdOn: string;
 }
 
 interface OrderDoc extends mongoose.Document {
@@ -18,6 +23,11 @@ interface OrderDoc extends mongoose.Document {
     expiresAt: Date;
     products: ProductDoc[];
     version: number;
+    shipTo: string;
+    email: string;
+    quantity: {productId: string, amount: number}[];
+    total: number;
+    createdOn: string;
 }
 
 interface OrderModel extends mongoose.Model<OrderDoc> {
@@ -42,9 +52,30 @@ const orderSchema = new mongoose.Schema({
     products: {
         type: [mongoose.Schema.Types.ObjectId],
         ref: 'Product'
-    }
+    },
+    shipTo: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    total: {
+        type: Number,
+        required: true
+    },
+    createdOn: {
+        type: String,
+        required: true
+    },
+    quantity: [{
+        productId: String,
+        amount: Number,
+        //required: true
+    }]
 }, {
-    toJSON: {
+    toJSON: { 
         transform(doc, ret) {
             ret.id = ret._id;
             delete ret._id

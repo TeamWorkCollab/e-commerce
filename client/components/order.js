@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../styles/components/order.module.scss';
 
-function Order({order}) {
-    console.log('Order ', order.products);
+function Order({ order }) {
+    console.log('Order ###', order);
     const [productList, setProductList] = useState();
 
     useEffect(() => {
@@ -13,6 +13,8 @@ function Order({order}) {
             // setOrderList(data)
             for (const id of order.products) {
                 let { data } = await axios.get(`/api/products/${id}`);
+                let quantity = order.quantity.filter(element => element.productId === data.id);
+                data.amount = quantity[0].amount;
                 list.push(data);
             };
             setProductList(list);
@@ -20,6 +22,11 @@ function Order({order}) {
         getProductDetails();
     }, [])
     console.log('product list ', productList)
+    // const amount = (id) => {
+    //     let quantity = order.quantity.filter(element => element.productId == id)
+    //     return quantity.amount
+    // }
+    // const amount = order.quantity.filter(element => element.productId === )
 
     return (
         <div className={styles.container}>
@@ -30,15 +37,18 @@ function Order({order}) {
                         ORDER
                         <span>{order.status}</span>
                     </p>
-                    <p className={styles.header_value}>Date</p>
+                    <p className={styles.header_value}>
+                        Date
+                        <span>{order.createdOn.split("T")[0]}</span>
+                    </p>
                 </div>
                 <div className={styles.order_total}>
                     <p>TOTAL</p>
-                    <p className={styles.header_value}>$35</p>
+                    <p className={styles.header_value}>${order.total}</p>
                 </div>
                 <div className={styles.order_shipto}>
                     <p>SHIP TO</p>
-                    <p className={styles.header_value}>Vu Nguyen</p>
+                    <p className={styles.header_value}>{order.shipTo}</p>
                 </div>
                 <div className={styles.order_number}>
                     <p>ORDER #</p>
@@ -58,7 +68,7 @@ function Order({order}) {
                                 <p>{product.details}</p>
                             </div>
                             <div className={styles.product_count}>
-                                X 2
+                                X {product.amount}
                             </div>
                             
                         </div>

@@ -21,7 +21,6 @@ const Shipping = () => {
     }, [])
 
     const onPayment = async event => {
-        console.log('CLICK ON PAYMENTT');
         event.preventDefault();
         sessionStorage.setItem('shippingCost', shippingCost);
         await doRequest();
@@ -31,13 +30,13 @@ const Shipping = () => {
         url: '/api/orders',
         method: 'post',
         body: {
-            products: JSON.parse(window.sessionStorage.getItem('cart'))
+            products: JSON.parse(window.sessionStorage.getItem('cart')),
+            contactInfo: JSON.parse(window.sessionStorage.getItem('contactInfo')),
+            shippingCost: shippingCost
         },
         onSuccess: (order) => Router.push('/orders/[orderId]', `/orders/${order.id}`)
-      });
-    
-    console.log('contact info ', contactInfo)
-        
+    });
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.container}>
